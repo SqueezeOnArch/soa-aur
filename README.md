@@ -35,7 +35,9 @@ pacman -S --noconfirm git base-devel
 3) Clone the soa-aur files and start installation
 
 git clone https://github.com/SqueezeOnArch/soa-aur.git
+
 cd soa-aur
+
 ./soa-install.sh
 
 (this will take several minutes to download and build the applications for your device)
