@@ -1,0 +1,11 @@
+[Unit]
+Description=Squeeze on Arch Web Interface
+After=network.target
+
+[Service]
+User=root
+Group=root
+ExecStart=/usr/bin/soa-web.lua
+
+[Install]
+WantedBy=multi-user.target

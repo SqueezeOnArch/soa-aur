@@ -1,0 +1,90 @@
+# FB Modes - timings taken from imx hdmi edid driver: drivers/video/mxc/mxc_edid.c
+
+# TV resolutions
+
+
+# 1080p
+
+# CEA mode 16 - default which is set in kernel bootargs
+mode "1920x1080-60"
+    geometry 1920 1080 1920 1080 32
+    timings 6734 148 88 36 4 44 5
+    hsync high
+    vsync high
+endmode
+
+# CEA mode 31
+mode "1920x1080-50"
+    geometry 1920 1080 1920 1080 32
+    timings 6734 148 528 36 4 44 5
+    hsync high
+    vsync high
+endmode
+
+
+# 720p
+
+# CEA mode 4
+mode "1280x720-60"
+    geometry 1280 720 1280 720 32
+    timings  13468 220 110 20 5 40 5
+    hsync high
+    vsync high
+endmode
+
+# CEA mode 19
+mode "1280x720-50"
+    geometry 1280 720 1280 720 32
+    timings 13468 220 440 20 5 40 5
+    hsync high
+    vsync high
+endmode
+
+
+# SD
+
+# 576p 50Hz - CEA mode 17
+mode "720x576-50"
+    geometry 720 576 720 576 32
+    timings 37037 68 12 39 5 64 5
+endmode
+
+
+# 480p 60Hz - CEA mode 2
+mode "720x480-60"
+    geometry 720 480 720 480 32
+    timings 37037 60 16 30 9 62 6
+endmode
+
+
+
+# Common monitor sizes - timings from existing fb.modes file in fbset package with bitdepth changed
+
+mode "1280x1024-60"
+    # D: 108.00 MHz, H: 63.981 kHz, V: 60.02 Hz
+    geometry 1280 1024 1280 1024 32
+    timings 9260 248 48 38 1 112 3
+    hsync high
+    vsync high
+endmode
+
+mode "1024x768-60"
+    # D: 65.00 MHz, H: 48.363 kHz, V: 60.00 Hz
+    geometry 1024 768 1024 768 32
+    timings 15385 160 24 29 3 136 6
+endmode
+
+mode "800x600-60"
+    # D: 40.00 MHz, H: 37.879 kHz, V: 60.32 Hz
+    geometry 800 600 800 600 32
+    timings 25000 88 40 23 1 128 4
+    hsync high
+    vsync high
+endmode
+
+mode "640x480-60"
+    # D: 25.175 MHz, H: 31.469 kHz, V: 59.940 Hz
+    geometry 640 480 640 480 32
+    timings 39722 48 16 33 10 96 2
+endmode
+

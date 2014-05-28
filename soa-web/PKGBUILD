@@ -1,0 +1,46 @@
+# Contributor: Adrian Smith <triode1@btinternet.com>
+
+pkgname=soa-web
+pkgver=r5.ee06391
+pkgrel=1
+pkgdesc='Squeeze on Arch Web Interface'
+arch=('any')
+license=('GPL3')
+depends=('turbolua' 'samba' 'lua51-filesystem')
+provides=('soa-web')
+conflicts=('soa-web')
+source=('git+https://github.com/SqueezeOnArch/soa-web.git'
+	'patch.patch'
+	'soa-web.conf'
+	'service')
+
+install=install
+
+pkgver() {
+	 cd "$pkgname"
+	 printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+	 cd "$pkgname"	
+	 patch -p0 -i ../patch.patch
+}
+
+package() {
+	 cd "$pkgname"
+	 install -m0755 -D soa-web.lua "${pkgdir}/usr/bin/soa-web.lua"
+	 install -d "${pkgdir}/usr/share/lua/5.1/soa-web"
+	 install -d "${pkgdir}/usr/share/soa-web/templ"
+	 install -d "${pkgdir}/usr/share/soa-web/static"
+	 cp -a soa-web/* "${pkgdir}/usr/share/lua/5.1/soa-web"
+	 cp -a templ/* "${pkgdir}/usr/share/soa-web/templ"
+	 cp -a static/* "${pkgdir}/usr/share/soa-web/static"
+	 install -d "${pkgdir}/etc/credentials"
+	 install -Dm644 ../soa-web.conf "${pkgdir}/etc/soa-web.conf"
+	 install -Dm644 ../service "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
+}
+
+sha256sums=('SKIP'
+            '128e320a7f395d439424069dffbfeae8a7a06a19f138efc601408f012518b68f'
+            'c302d0202f4e0a7a6af24beb864d559941050f749bd914b74c0b8d86225a96d7'
+            'be852b6da5b2c20ca2ab25f4c3940e4e49061e85b12efb0188e2d97836d4dae6')

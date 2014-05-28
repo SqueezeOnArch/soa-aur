@@ -1,0 +1,17 @@
+# Contributor: Adrian Smith <triode1@btinternet.com>
+
+pkgname=jivelite-autologin
+pkgver=1
+pkgrel=1
+pkgdesc='Autologin for Jivelite'
+arch=('any')
+source=('service')
+
+install=install
+
+package() {
+	  mkdir -p "${pkgdir}/etc/systemd/system/getty@tty1.service.d"
+	  install -Dm644 service "${pkgdir}/etc/systemd/system/getty@tty1.service.d/autologin.conf"
+}
+
+sha256sums=('77ced17fdc8184f42a24c59ef72fd330e4c62c334e5a259488365d126df99ffa')

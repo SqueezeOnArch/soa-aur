@@ -1,0 +1,19 @@
+post_install() {
+	getent group jivelite &>/dev/null || groupadd -r jivelite >/dev/null
+	getent passwd jivelite &>/dev/null || useradd -r -m -g jivelite -G video -c 'Jivelite' -s /usr/bin/jivelite-sp jivelite >/dev/null
+	post_upgrade
+}
+
+post_upgrade() {
+	systemctl disable getty@tty1.service
+	systemctl enable getty@tty1.service
+	systemctl restart getty@tty1.service
+}
+
+post_remove() {
+	getent passwd jivelite &>/dev/null && userdel jivelite >/dev/null
+	getent group jivelite &>/dev/null && groupdel jivelite >/dev/null || true
+	systemctl disable getty@tty1.service
+	systemctl enable getty@tty1.service
+	systemctl restart getty@tty1.service
+}

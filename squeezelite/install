@@ -1,0 +1,15 @@
+post_install() {
+	getent group squeezelite &>/dev/null || groupadd -r squeezelite >/dev/null
+	getent passwd squeezelite &>/dev/null || useradd -r -g squeezelite -G audio -c 'Squeezelite' -s /bin/false squeezelite >/dev/null
+	post_upgrade
+}
+
+post_upgrade() {
+	touch /var/log/squeezelite.log
+	chown -R squeezelite:squeezelite /var/log/squeezelite.log
+}
+
+post_remove() {
+	getent passwd squeezelite &>/dev/null && userdel squeezelite >/dev/null
+	getent group squeezelite &>/dev/null && groupdel squeezelite >/dev/null || true
+}

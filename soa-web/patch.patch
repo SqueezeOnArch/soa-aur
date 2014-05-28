@@ -1,0 +1,15 @@
+--- soa-web.lua.orig	2014-05-27 22:45:35.136530320 +0100
++++ soa-web.lua	2014-05-27 22:46:15.076530325 +0100
+@@ -43,10 +43,10 @@
+ local release = "0.1"
+ 
+ -- server port
+-local PORT = 8081
++local PORT = 80
+ 
+ -- paths to our templates and static content
+-local path  = "."
++local path  = "/usr/share/soa-web"
+ local templ_path  = path .. '/templ/'
+ local static_path = path .. '/static/'
+ 

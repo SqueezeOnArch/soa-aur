@@ -1,0 +1,41 @@
+# Contributor: Adrian Smith <triode1@btinternet.com>
+
+pkgname=jivelite
+pkgver=r71.417f1c8
+pkgrel=1
+pkgdesc='Squeezebox Control Application'
+arch=('i686' 'x86_64' 'armv6h' 'armv7h')
+url='http://code.google.com/p/jivelite/'
+license=('BSD')
+depends=('git' 'sdl' 'sdl_gfx' 'sdl_image' 'sdl_ttf')
+provides=('jivelite')
+conflicts=('jivelite')
+source=('git+https://code.google.com/p/jivelite/'
+	'fb.modes')
+
+pkgver() {
+	 cd "$pkgname"
+	 printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+	 cd "$pkgname"
+
+	 export LDFLAGS="${LDFLAGS} -lrt"
+	 make PREFIX="/usr"
+}
+
+package() {
+	 cd "$pkgname"
+
+	 install -m0755 -D bin/jivelite "${pkgdir}/usr/bin/jivelite"
+	 install -m0755 -D bin/jivelite "${pkgdir}/usr/bin/jivelite-sp"
+	 install -d "${pkgdir}/usr/share/jive"
+	 cp -a share/jive/* "${pkgdir}/usr/share/jive"
+	 cp -a share/lua/5.1/* "${pkgdir}/usr/share/jive"
+	 cp -a lib/lua/5.1/* "${pkgdir}/usr/share/jive"
+	 install -Dm644 ../fb.modes "${pkgdir}/etc/fb.modes"
+}
+
+sha256sums=('SKIP'
+            '1e4ac02deb66245788ad9c21cc16ecfad894e6efbc52a8fb473eeee1d6131fb7')

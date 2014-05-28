@@ -1,0 +1,20 @@
+post_install() {
+	mkdir -p /mnt/disk1
+	mkdir -p /mnt/disk2
+	mkdir -p /mnt/disk3
+	mkdir -p /mnt/disk4
+	mkdir -p /mnt/disk5
+	mkdir -p /mnt/disk6
+	post_upgrade
+}
+
+post_upgrade() {
+	systemctl disable soa-web.service
+	systemctl enable soa-web.service
+	systemctl restart soa-web.service
+}
+
+post_remove() {
+	systemctl stop soa-web.service
+	systemctl disable soa-web.service
+}
