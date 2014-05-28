@@ -21,3 +21,30 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Use of Squeeze on Arch is at your own risk.
 
+
+Instructions for initial installation:
+
+1) Install a base Linux Arch installtion on your machine and connect to it as root (using ssh or otherwise)
+
+2) Update the base software and install minimal files to build applications:
+
+pacman -Syu --noconfirm
+pacman -S --noconfirm git base-devel
+
+3) Clone the soa-aur files and start installation
+
+git clone https://github.com/SqueezeOnArch/soa-aur.git
+cd soa-aur
+./soa-install.sh
+
+(this will take several minutes to download and build the applications for your device)
+
+4) If you wish to install Logitech Media Server:
+
+./soa-install-lms.sh
+
+(this will take upto an hour depending on the performance of your machine)
+
+5) try to connect to the device using a web browser to see the configuration interface
+
+[this initial version does not support configuration of network conectivity - please see arch documentation for this]
