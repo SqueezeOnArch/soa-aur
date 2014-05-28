@@ -29,6 +29,7 @@ Instructions for initial installation:
 2) Update the base software and install minimal files to build applications:
 
 pacman -Syu --noconfirm
+
 pacman -S --noconfirm git base-devel
 
 3) Clone the soa-aur files and start installation
