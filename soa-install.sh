@@ -16,7 +16,7 @@ echo
 while true; do
     read -p "Do you agree to the above and wish to continue? " yn
     case $yn in
-        [Yy]* ) make install; break;;
+        [Yy]* ) break;;
         [Nn]* ) exit;;
         * ) echo "Please answer yes or no.";;
     esac
