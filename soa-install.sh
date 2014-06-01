@@ -24,27 +24,40 @@ done
 
 echo
 
-cd libsoxr
-makepkg --asroot -c -i -f -s --noconfirm
-cd ..
+echo "1/6 turbolua" > /tmp/soa-install-progress
 
 cd turbolua
 makepkg --asroot -c -i -f -s --noconfirm
 cd ..
 
-cd squeezelite
-makepkg --asroot -c -i -f -s --noconfirm
-cd ..
-
-cd jivelite
-makepkg --asroot -c -i -f -s --noconfirm
-cd ..
-
-cd jivelite-autologin
-makepkg --asroot -c -i -f -s --noconfirm
-cd ..
+echo "2/6 soa-web" > /tmp/soa-install-progress
 
 cd soa-web
 makepkg --asroot -c -i -f -s --noconfirm
 cd ..
 
+echo "3/6 libsoxr" > /tmp/soa-install-progress
+
+cd libsoxr
+makepkg --asroot -c -i -f -s --noconfirm
+cd ..
+
+echo "4/6 squeezelite" > /tmp/soa-install-progress
+
+cd squeezelite
+makepkg --asroot -c -i -f -s --noconfirm
+cd ..
+
+echo "5/6 jivelite" > /tmp/soa-install-progress
+
+cd jivelite
+makepkg --asroot -c -i -f -s --noconfirm
+cd ..
+
+echo "6/6 jivelite-autologin" > /tmp/soa-install-progress
+
+cd jivelite-autologin
+makepkg --asroot -c -i -f -s --noconfirm
+cd ..
+
+rm /tmp/soa-install-progress
