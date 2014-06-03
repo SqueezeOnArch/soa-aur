@@ -7,6 +7,7 @@ if [ ! -d "$app" ]; then
     exit
 fi
 
+git commit -a -m "!" -uno
 git pull
 
 cd $app
