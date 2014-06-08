@@ -7,7 +7,11 @@ if [ ! -d "$app" ]; then
     exit
 fi
 
-git commit -a -m "!" -uno
+# PKGBUILD files using git source get modified - checkout again
+git checkout jivelite/PKGBUILD
+git checkout soa-web/PKGBUILD
+git checkout squeezelite/PKGBUILD
+
 git pull
 
 cd $app
