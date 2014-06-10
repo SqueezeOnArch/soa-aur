@@ -21,8 +21,6 @@ sha1sums=('9388eb200a48a3a04511e990686fee22a0d8bb5f'
 install=install
 
 prepare() {
-	echo "perl: ${perl}"
-
 	cd "${srcdir}/${pkgname}-${pkgver}"
 	rm -r CPAN/arch Bin/{powerpc,sparc}-linux
 	case $CARCH in
@@ -30,14 +28,8 @@ prepare() {
 		i686) rm -r Bin/arm-linux ;;
 		arm*) rm -r Bin/i386-linux ;;
 	esac
-	rm ../slimserver-vendor/CPAN/Compress-Raw-Zlib-2.033.tar.gz
-	rm -Rf CPAN/Compress
 	sed \
-		-e '/build_module Compress-Raw-Zlib/c true' \
-		-e 's/XSAccessor-1.05/XSAccessor-1.18/g' \
 		-e '/RUN_TESTS=1/c RUN_TESTS=0' \
-		-e 's/perl5.12/perl/g' \
-		-e 's/5.12/5.20/g' \
 		-i ../slimserver-vendor/CPAN/buildme.sh
 }
 
@@ -45,7 +37,6 @@ build() {
 	cd "${srcdir}/slimserver-vendor/CPAN"
 	export CFLAGS=${CFLAGS//-O2/-Os}
 	sh buildme.sh
-	rm -f build/5.20/lib/perl5/*-linux-thread-multi/XML/Parser/Expat.pm
 }
 
 package() {
