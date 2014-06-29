@@ -7,7 +7,7 @@ pkgrel=4
 pkgdesc='Streaming audio server'
 url='http://downloads.slimdevices.com/'
 license=('GPL' 'custom')
-arch=('i686' 'x86_64' 'armv6h' 'armv7h')
+arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
 makedepends=('nasm' 'yasm' 'rsync' 'git')
 [[ $CARCH = x86_64 ]] && optdepends=(lib32-{glibc,gcc-libs}': transcoding')
 depends=('perl>5.19' 'perl<5.21')
