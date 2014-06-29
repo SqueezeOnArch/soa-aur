@@ -1,0 +1,124 @@
+# i.MX6 Wandboard
+# Maintainer: Kevin Mihelich <kevin@archlinuxarm.org>
+# Modified: Adrian Smith <triode1@btinternet.com>
+
+buildarch=4
+
+pkgbase=linux-wandboard
+pkgname=${pkgbase}
+_commit=9d567e4f285e80bc332e79f0636259bc05a4ee3b
+_srcname=linux-${_commit}
+_kernelname=${pkgbase#linux}
+_desc="i.MX6 Wandboard"
+pkgver=3.10.17
+pkgrel=2
+arch=('armv7h')
+url="http://www.kernel.org/"
+license=('GPL2')
+makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git')
+options=('!strip')
+source=("https://github.com/wandboard-org/linux/archive/${_commit}.tar.gz"
+        '0001-Swap-usdhc1-and-usdhc3.patch'
+	'spdif.patch'
+        'config')
+md5sums=('97d87f0d40873c0b1da12b616a2c4ee1'
+         '1edf745b39c715206fbe327c60f6cf76'
+         '31b8c10d4b363be56391dc70761ecac4'
+         '81ec6ae7ff6967ca73f08775b9603387')
+
+prepare() {
+  cd "${srcdir}/${_srcname}"
+
+  cat "${srcdir}/config" > ./.config
+
+  patch -p1 -i ../0001-Swap-usdhc1-and-usdhc3.patch
+  patch -p1 -i ../spdif.patch
+
+  # add pkgrel to extraversion
+  sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-${pkgrel}|" Makefile
+
+  # don't run depmod on 'make install'. We'll do this ourselves in packaging
+  sed -i '2iexit 0' scripts/depmod.sh
+}
+
+build() {
+  cd "${srcdir}/${_srcname}"
+
+  # get kernel version
+  make prepare
+
+  # load configuration
+  # Configure the kernel. Replace the line below with one of your choice.
+  #make menuconfig # CLI menu for configuration
+  #make nconfig # new CLI menu for configuration
+  #make xconfig # X-based configuration
+  #make oldconfig # using old config from previous kernel version
+  # ... or manually edit .config
+
+  # Copy back our configuration (use with new kernel version)
+  #cp ./.config ../${pkgbase}.config
+
+  ####################
+  # stop here
+  # this is useful to configure the kernel
+  #msg "Stopping build"
+  #return 1
+  ####################
+
+  #yes "" | make config
+
+  # build!
+  make ${MAKEFLAGS} zImage modules imx6dl-wandboard.dtb imx6q-wandboard.dtb
+}
+
+package() {
+  pkgdesc="The Linux Kernel and modules - ${_desc}"
+  depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
+  optdepends=('crda: to set the correct wireless channels of your country')
+  provides=('kernel26' "linux=${pkgver}")
+  conflicts=('linux')
+  replaces=('linux-imx6-wandboard-dt')
+  install=${pkgname}.install
+
+  cd "${srcdir}/${_srcname}"
+
+  KARCH=arm
+
+  # get kernel version
+  _kernver="$(make kernelrelease)"
+  _basekernel=${_kernver%%-*}
+  _basekernel=${_basekernel%.*}
+
+  mkdir -p "${pkgdir}"/{lib/modules,lib/firmware,boot/dtbs}
+  make INSTALL_MOD_PATH="${pkgdir}" modules_install
+  cp arch/$KARCH/boot/zImage "${pkgdir}/boot/zImage"
+  cp arch/$KARCH/boot/dts/*.dtb "${pkgdir}/boot/dtbs"
+
+  # set correct depmod command for install
+  sed \
+    -e  "s/KERNEL_NAME=.*/KERNEL_NAME=${_kernelname}/g" \
+    -e  "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/g" \
+    -i "${startdir}/${pkgname}.install"
+
+  # remove build and source links
+  rm -f "${pkgdir}"/lib/modules/${_kernver}/{source,build}
+  # remove the firmware
+  rm -rf "${pkgdir}/lib/firmware"
+  # gzip -9 all modules to save 100MB of space
+  find "${pkgdir}" -name '*.ko' |xargs -P 2 -n 1 gzip -9
+  # make room for external modules
+  ln -s "../extramodules-${_basekernel}-${_kernelname:-ARCH}" "${pkgdir}/lib/modules/${_kernver}/extramodules"
+  # add real version for building modules and running depmod from post_install/upgrade
+  mkdir -p "${pkgdir}/lib/modules/extramodules-${_basekernel}-${_kernelname:-ARCH}"
+  echo "${_kernver}" > "${pkgdir}/lib/modules/extramodules-${_basekernel}-${_kernelname:-ARCH}/version"
+
+  # Now we call depmod...
+  depmod -b "$pkgdir" -F System.map "$_kernver"
+
+  # move module tree /lib -> /usr/lib
+  mkdir -p "${pkgdir}/usr"
+  mv "$pkgdir/lib" "$pkgdir/usr"
+
+  cd "${srcdir}/${_srcname}"
+
+}

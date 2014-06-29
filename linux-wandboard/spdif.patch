@@ -1,0 +1,179 @@
+diff --git a/sound/soc/codecs/spdif_transmitter.c b/sound/soc/codecs/spdif_transmitter.c
+index dfd03be..8906f03 100644
+--- a/sound/soc/codecs/spdif_transmitter.c
++++ b/sound/soc/codecs/spdif_transmitter.c
+@@ -23,7 +23,7 @@
+ 
+ #define DRV_NAME "spdif-dit"
+ 
+-#define STUB_RATES	SNDRV_PCM_RATE_8000_96000
++#define STUB_RATES	SNDRV_PCM_RATE_8000_192000
+ #define STUB_FORMATS	(SNDRV_PCM_FMTBIT_S16_LE | \
+ 			SNDRV_PCM_FMTBIT_S20_3LE | \
+ 			SNDRV_PCM_FMTBIT_S24_LE)
+diff --git a/sound/soc/fsl/Makefile b/sound/soc/fsl/Makefile
+index a04afcf..7b82566 100644
+--- a/sound/soc/fsl/Makefile
++++ b/sound/soc/fsl/Makefile
+@@ -73,3 +73,5 @@ obj-$(CONFIG_SND_SOC_IMX_HDMI) += snd-soc-imx-hdmi.o
+ obj-$(CONFIG_SND_SOC_IMX_SI476X) += snd-soc-imx-si476x.o
+ 
+ AFLAGS_hdmi_pcm.o := -march=armv7-a -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp
++
++CFLAGS_fsl_spdif.o := -DDEBUG
+diff --git a/sound/soc/fsl/fsl_spdif.c b/sound/soc/fsl/fsl_spdif.c
+index 99480fe..4ccf4dd 100644
+--- a/sound/soc/fsl/fsl_spdif.c
++++ b/sound/soc/fsl/fsl_spdif.c
+@@ -79,6 +79,7 @@ struct fsl_spdif_priv {
+ 	bool dpll_locked;
+ 	u8 txclk_div[SPDIF_TXRATE_MAX];
+ 	u8 txclk_src[SPDIF_TXRATE_MAX];
++	u32 txrate[SPDIF_TXRATE_MAX];
+ 	u8 rxclk_src;
+ 	struct clk *txclk[SPDIF_TXRATE_MAX];
+ 	struct clk *rxclk;
+@@ -369,6 +370,22 @@ static int spdif_set_sample_rate(struct snd_pcm_substream *substream,
+ 		rate = SPDIF_TXRATE_48000;
+ 		csfs = IEC958_AES3_CON_FS_48000;
+ 		break;
++	case 88200:
++		rate = SPDIF_TXRATE_88200;
++		csfs = IEC958_AES3_CON_FS_88200;
++		break;
++	case 96000:
++		rate = SPDIF_TXRATE_96000;
++		csfs = IEC958_AES3_CON_FS_96000;
++		break;
++	case 176400:
++		rate = SPDIF_TXRATE_176400;
++		csfs = IEC958_AES3_CON_FS_176400;
++		break;
++	case 192000:
++		rate = SPDIF_TXRATE_192000;
++		csfs = IEC958_AES3_CON_FS_192000;
++		break;
+ 	default:
+ 		dev_err(&pdev->dev, "unsupported sample rate %d\n", sample_rate);
+ 		return -EINVAL;
+@@ -443,10 +460,10 @@ static int fsl_spdif_startup(struct snd_pcm_substream *substream,
+ 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
+ 		scr = SCR_TXFIFO_AUTOSYNC | SCR_TXFIFO_CTRL_NORMAL |
+ 			SCR_TXSEL_NORMAL | SCR_USRC_SEL_CHIP |
+-			SCR_TXFIFO_FSEL_IF8;
++			SCR_TXFIFO_FSEL_IF8 | SCR_VAL_CLEAR;
+ 		mask = SCR_TXFIFO_AUTOSYNC_MASK | SCR_TXFIFO_CTRL_MASK |
+ 			SCR_TXSEL_MASK | SCR_USRC_SEL_MASK |
+-			SCR_TXFIFO_FSEL_MASK;
++			SCR_TXFIFO_FSEL_MASK | SCR_VAL_MASK;
+ 		for (i = 0; i < SPDIF_TXRATE_MAX; i++)
+ 			clk_prepare_enable(spdif_priv->txclk[i]);
+ 	} else {
+@@ -1009,7 +1026,7 @@ static u32 fsl_spdif_txclk_caldiv(struct fsl_spdif_priv *spdif_priv,
+ 				struct clk *clk, u64 savesub,
+ 				enum spdif_txrate index)
+ {
+-	const u32 rate[] = { 32000, 44100, 48000 };
++	const u32 rate[] = { 32000, 44100, 48000, 88200, 96000, 176400, 192000 };
+ 	u64 rate_ideal, rate_actual, sub;
+ 	u32 div, arate;
+ 
+@@ -1024,22 +1041,25 @@ static u32 fsl_spdif_txclk_caldiv(struct fsl_spdif_priv *spdif_priv,
+ 			/* We are lucky */
+ 			savesub = 0;
+ 			spdif_priv->txclk_div[index] = div;
++			spdif_priv->txrate[index] = arate;
+ 			break;
+ 		} else if (arate / rate[index] == 1) {
+ 			/* A little bigger than expect */
+-			sub = (arate - rate[index]) * 100000;
++			sub = (u64)(arate - rate[index]) * 100000;
+ 			do_div(sub, rate[index]);
+ 			if (sub < savesub) {
+ 				savesub = sub;
+ 				spdif_priv->txclk_div[index] = div;
++				spdif_priv->txrate[index] = arate;
+ 			}
+ 		} else if (rate[index] / arate == 1) {
+ 			/* A little smaller than expect */
+-			sub = (rate[index] - arate) * 100000;
++			sub = (u64)(rate[index] - arate) * 100000;
+ 			do_div(sub, rate[index]);
+ 			if (sub < savesub) {
+ 				savesub = sub;
+ 				spdif_priv->txclk_div[index] = div;
++				spdif_priv->txrate[index] = arate;
+ 			}
+ 		}
+ 	}
+@@ -1050,7 +1070,7 @@ static u32 fsl_spdif_txclk_caldiv(struct fsl_spdif_priv *spdif_priv,
+ static int fsl_spdif_probe_txclk(struct fsl_spdif_priv *spdif_priv,
+ 				enum spdif_txrate index)
+ {
+-	const u32 rate[] = { 32000, 44100, 48000 };
++	const u32 rate[] = { 32000, 44100, 48000, 88200, 96000, 176400, 192000 };
+ 	struct platform_device *pdev = spdif_priv->pdev;
+ 	struct device *dev = &pdev->dev;
+ 	u64 savesub = 100000, ret;
+@@ -1058,7 +1078,7 @@ static int fsl_spdif_probe_txclk(struct fsl_spdif_priv *spdif_priv,
+ 	char tmp[16];
+ 	int i;
+ 
+-	for (i = 0; i < STC_TXCLK_SRC_MAX; i++) {
++	for (i = 0; i <= 1; i++) {
+ 		sprintf(tmp, "rxtx%d", i);
+ 		clk = devm_clk_get(&pdev->dev, tmp);
+ 		if (IS_ERR(clk)) {
+@@ -1088,8 +1108,8 @@ static int fsl_spdif_probe_txclk(struct fsl_spdif_priv *spdif_priv,
+ 			break;
+ 	}
+ 
+-	dev_dbg(&pdev->dev, "use rxtx%d as tx clock source for %dHz sample rate\n",
+-			spdif_priv->txclk_src[index], rate[index]);
++	dev_dbg(&pdev->dev, "use rxtx%d as tx clock source for %dHz sample rate actual rate: %dHz\n",
++			spdif_priv->txclk_src[index], rate[index], spdif_priv->txrate[index]);
+ 	dev_dbg(&pdev->dev, "use divisor %d for %dHz sample rate\n",
+ 			spdif_priv->txclk_div[index], rate[index]);
+ 
+@@ -1189,8 +1209,8 @@ static int fsl_spdif_probe(struct platform_device *pdev)
+ 
+ 	/* Init tx channel status default value */
+ 	ctrl->ch_status[0] =
+-		IEC958_AES0_CON_NOT_COPYRIGHT | IEC958_AES0_CON_EMPHASIS_5015;
+-	ctrl->ch_status[1] = IEC958_AES1_CON_DIGDIGCONV_ID;
++		IEC958_AES0_CON_NOT_COPYRIGHT | IEC958_AES0_CON_EMPHASIS_NONE;
++	ctrl->ch_status[1] = IEC958_AES1_CON_GENERAL;
+ 	ctrl->ch_status[2] = 0x00;
+ 	ctrl->ch_status[3] =
+ 		IEC958_AES3_CON_FS_44100 | IEC958_AES3_CON_CLOCK_1000PPM;
+diff --git a/sound/soc/fsl/fsl_spdif.h b/sound/soc/fsl/fsl_spdif.h
+index dbbbb1e..ac9a961 100644
+--- a/sound/soc/fsl/fsl_spdif.h
++++ b/sound/soc/fsl/fsl_spdif.h
+@@ -164,8 +164,12 @@ enum spdif_txrate {
+ 	SPDIF_TXRATE_32000 = 0,
+ 	SPDIF_TXRATE_44100,
+ 	SPDIF_TXRATE_48000,
++	SPDIF_TXRATE_88200,
++	SPDIF_TXRATE_96000,
++	SPDIF_TXRATE_176400,
++	SPDIF_TXRATE_192000,
+ };
+-#define SPDIF_TXRATE_MAX		(SPDIF_TXRATE_48000 + 1)
++#define SPDIF_TXRATE_MAX		(SPDIF_TXRATE_192000 + 1)
+ 
+ 
+ #define SPDIF_CSTATUS_BYTE		6
+@@ -175,7 +179,11 @@ enum spdif_txrate {
+ 
+ #define FSL_SPDIF_RATES_PLAYBACK	(SNDRV_PCM_RATE_32000 |	\
+ 					 SNDRV_PCM_RATE_44100 |	\
+-					 SNDRV_PCM_RATE_48000)
++					 SNDRV_PCM_RATE_48000 | \
++					 SNDRV_PCM_RATE_88200 | \
++					 SNDRV_PCM_RATE_96000 | \
++					 SNDRV_PCM_RATE_176400 | \
++					 SNDRV_PCM_RATE_192000)
+ 
+ #define FSL_SPDIF_RATES_CAPTURE		(SNDRV_PCM_RATE_16000 | \
+ 					 SNDRV_PCM_RATE_32000 |	\
