@@ -46,8 +46,14 @@ cd soa-aur
 
 ./soa-install-lms.sh
 
-(this will take upto an hour depending on the performance of your machine)
+(this will take up to an hour depending on the performance of your machine)
 
-5) try to connect to the device using a web browser to see the configuration interface
+5) If you wish to install a custom kernel for added features (currently only for wandboard to support additional spdif rates):
+
+./soa-install-wand-kernel.sh
+
+(this will take up to an hour depending on the performance of your machine)
+
+6) try to connect to the device using a web browser to see the configuration interface
 
 [this initial version does not support configuration of network conectivity - please see arch documentation for this]
