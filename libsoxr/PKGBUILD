@@ -18,6 +18,9 @@ sha256sums=('dcc16868d1a157079316f84233afcc2b52dd0bd541dd8439dc25bceb306faac2')
 
 build() {
 	cd ${_srcname}-${pkgver}-Source
+
+	patch -p1 -i ../../001-fb8657.patch
+
 	cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr \
         -DBUILD_EXAMPLES:BOOL=OFF \
         -DBUILD_SHARED_LIBS:BOOL=ON \

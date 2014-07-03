@@ -4,9 +4,21 @@ post_install() {
 	post_upgrade
 }
 
+pre_upgrade() {
+	systemctl stop squeezelite.service
+}
+
 post_upgrade() {
 	touch /var/log/squeezelite.log
 	chown -R squeezelite:squeezelite /var/log/squeezelite.log
+
+	systemctl enable squeezelite.service
+	systemctl restart squeezelite.service
+}
+
+pre_remove() {
+	systemctl stop squeezelite.service
+	systemctl disable squeezelite.service
 }
 
 post_remove() {
