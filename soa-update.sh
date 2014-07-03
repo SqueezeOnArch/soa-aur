@@ -15,6 +15,6 @@ git checkout squeezelite/PKGBUILD
 git pull
 
 cd $app
-makepkg --asroot -c -i -s --noconfirm
+makepkg --asroot -c -i -f -s --noconfirm
 cd ..
 
