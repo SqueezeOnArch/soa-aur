@@ -2,26 +2,28 @@
 # Modified: Adrian Smith <triode1@btinternet.com>
 
 pkgname=logitechmediaserver
-pkgver=7.8.0
-pkgrel=4
+pkgver=7.8
+pkgrel=5
+_slimserver_commit=5de0f366e0e4e72fc5c14344acc7e91768398bd4
+_vendor_commit=a45cc7ac2f65bb4c0a538b6c0c5c80fba6d2faa9
 pkgdesc='Streaming audio server'
 url='http://downloads.slimdevices.com/'
 license=('GPL' 'custom')
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
-makedepends=('nasm' 'yasm' 'rsync' 'git')
+makedepends=('nasm' 'yasm' 'rsync')
 [[ $CARCH = x86_64 ]] && optdepends=(lib32-{glibc,gcc-libs}': transcoding')
 depends=('perl>5.19' 'perl<5.21')
-source=("http://downloads.slimdevices.com/LogitechMediaServer_v${pkgver}/logitechmediaserver-${pkgver}.tgz"
-        'git+https://github.com/Logitech/slimserver-vendor.git#branch=public/7.8'
+source=("https://github.com/Logitech/slimserver/archive/${_slimserver_commit}.tar.gz"
+	"https://github.com/Logitech/slimserver-vendor/archive/${_vendor_commit}.tar.gz"
         'service')
-sha1sums=('9388eb200a48a3a04511e990686fee22a0d8bb5f'
-          'SKIP'
+sha1sums=('3bfcbc6a29b6293f6034c5108958a604f4640b95'
+          'bf5d24bc19f08e7654479b67027bb94443835c9f'
           '734f84233fc7ab350b169f88aa5bb0cf3decad42')
 
 install=install
 
 prepare() {
-	cd "${srcdir}/${pkgname}-${pkgver}"
+	cd "${srcdir}/slimserver-${_slimserver_commit}"
 	rm -r CPAN/arch Bin/{powerpc,sparc}-linux
 	case $CARCH in
 		x86_64) rm -r Bin/arm-linux ;;
@@ -30,20 +32,20 @@ prepare() {
 	esac
 	sed \
 		-e '/RUN_TESTS=1/c RUN_TESTS=0' \
-		-i ../slimserver-vendor/CPAN/buildme.sh
+		-i ../slimserver-vendor-${_vendor_commit}/CPAN/buildme.sh
 }
 
 build() {
-	cd "${srcdir}/slimserver-vendor/CPAN"
+	cd "${srcdir}/slimserver-vendor-${_vendor_commit}/CPAN"
 	export CFLAGS=${CFLAGS//-O2/-Os}
 	sh buildme.sh
 }
 
 package() {
-	cd "${srcdir}/${pkgname}-${pkgver}"
+	cd "${srcdir}/slimserver-${_slimserver_commit}"
 	install -d "${pkgdir}"/{opt,usr/share/licenses}/"${pkgname}"
 	cp -a * "${pkgdir}/opt/${pkgname}"
-	cp -a ../slimserver-vendor/CPAN/build/5.20/lib/perl5/*linux*/* "${pkgdir}/opt/${pkgname}/CPAN"
+	cp -a ../slimserver-vendor-${_vendor_commit}/CPAN/build/5.20/lib/perl5/*linux*/* "${pkgdir}/opt/${pkgname}/CPAN"
 	ln -s "/opt/${pkgname}/License.txt" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 	install -Dm644 ../service "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
 }
