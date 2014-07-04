@@ -1,0 +1,29 @@
+post_install() {
+	getent group logitechms &>/dev/null || groupadd -r logitechms >/dev/null
+	getent passwd logitechms &>/dev/null || useradd -r -g logitechms -d /opt/logitechmediaserver -c 'Logitech Media Server' -s /bin/false logitechms >/dev/null
+
+	post_upgrade
+}
+
+pre_upgrade() {
+	systemctl stop logitechmediaserver.service
+}
+
+post_upgrade() {
+	mkdir -p /opt/logitechmediaserver/{cache,Logs,prefs{,/plugin},Plugins}
+	touch /opt/logitechmediaserver/Logs/slimserver.log
+	chown -R logitechms:logitechms /opt/logitechmediaserver
+
+	systemctl enable logitechmediaserver.service
+	systemctl restart logitechmediaserver.service
+}
+
+pre_remove() {
+	systemctl stop logitechmediaserver.service
+	systemctl disable logitechmediaserver.service
+}
+
+post_remove() {
+	getent passwd logitechms &>/dev/null && userdel logitechms >/dev/null
+	getent group logitechms &>/dev/null && groupdel logitechms >/dev/null || true
+}

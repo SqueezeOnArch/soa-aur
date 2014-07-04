@@ -1,0 +1,46 @@
+# Maintained: Adrian Smith <triode1@btinternet.com>
+
+pkgname=logitechmediaserver-lms
+pkgver=7.9r19236.d443fa6
+pkgrel=1
+pkgdesc='Streaming audio server'
+url='http://downloads.slimdevices.com/'
+license=('GPL' 'custom')
+arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
+[[ $CARCH = x86_64 ]] && optdepends=(lib32-{glibc,gcc-libs}': transcoding')
+depends=('perl>5.19' 'perl<5.21' 'logitechmediaserver-cpan')
+conflicts=('logitechmediaserver')
+source=('git+https://github.com/Logitech/slimserver.git#branch=public/7.9'
+        'service')
+sha1sums=('SKIP'
+          '734f84233fc7ab350b169f88aa5bb0cf3decad42')
+
+install=install
+
+pkgver() {
+         cd "${srcdir}/slimserver"
+         printf "7.9r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+prepare() {
+	cd "${srcdir}/slimserver"
+	rm -r CPAN/arch
+	rm -r CPAN/Class/XSAccessor.pm CPAN/Class/XSAccessor CPAN/DBD/SQLite.pm CPAN/DBI.pm CPAN/DBI CPAN/Digest/SHA1.pm
+	rm -r CPAN/EV.pm CPAN/Encode/Detect/Detector.pm CPAN/Font CPAN/HTML CPAN/IO/AIO.pm CPAN/IO/Interface.pm CPAN/IO/Interface
+	rm -r CPAN/Image/Scale.pm CPAN/JSON/XS.pm CPAN/JSON/XS/Boolean.pm
+	rm -r CPAN/Linux/Inotify2.pm CPAN/Locale/Hebrew.pm CPAN/MP3/Cut CPAN/Media/Scan.pm CPAN/Media/Scan
+	rm -r CPAN/Sub/Name.pm CPAN/Template.pm CPAN/Template CPAN/XML/Parser.pm CPAN/XML/Parser CPAN/YAML
+	rm -r Bin/{powerpc,sparc}-linux Bin/i386-freebsd-64int Bin/MSWin32-x86-multi-thread Bin/darwin
+	case $CARCH in
+		x86_64) rm -r Bin/arm-linux ;;
+		i686) rm -r Bin/arm-linux Bin/x86_64-linux ;;
+		arm*) rm -r Bin/i386-linux Bin/x86_64-linux ;;
+	esac
+}
+
+package() {
+	cd "${srcdir}/slimserver"
+	install -d "${pkgdir}"/{opt,usr/share/licenses}"/logitechmediaserver"
+	cp -a * "${pkgdir}/opt/logitechmediaserver"
+	ln -s "/opt/logitechmediaserver/License.txt" "${pkgdir}/usr/share/licenses/logitechmediaserver/LICENSE"
+	install -Dm644 ../service "${pkgdir}/usr/lib/systemd/system/logitechmediaserver.service"
+}

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Squeeze on Arch Installer - LMS (run as root)"
+echo "Squeeze on Arch Installer - LMS 7.9 (run as root)"
 echo
 echo "SQUEEZE ON ARCH IS PROVIDED 'AS IS' AND ANY EXPRESS OR IMPLIED"
 echo "WARRANTIES ARE DISCLAIMED. IN NO EVENT SHALL THE SOFTWARE PROVIDER BE"
@@ -24,7 +24,11 @@ done
 
 echo
 
-cd logitechmediaserver
+cd logitechmediaserver-7.9-cpan
+makepkg --asroot -c -i -s --noconfirm
+cd ..
+
+cd logitechmediaserver-7.9-lsm
 makepkg --asroot -c -i -s --noconfirm
 cd ..
 
