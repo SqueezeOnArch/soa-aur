@@ -28,7 +28,7 @@ cd logitechmediaserver-7.9-cpan
 makepkg --asroot -c -i -s --noconfirm
 cd ..
 
-cd logitechmediaserver-7.9-lsm
+cd logitechmediaserver-7.9-lms
 makepkg --asroot -c -i -s --noconfirm
 cd ..
 
