@@ -13,8 +13,8 @@ source=('git+https://github.com/Logitech/slimserver-vendor.git#branch=public/7.9
 sha1sums=('SKIP')
 
 pkgver() {
-         cd "$pkgname"
-         printf "7.9r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+	cd "${srcdir}/slimserver-vendor"
+	printf "7.9r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 prepare() {
