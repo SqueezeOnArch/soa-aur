@@ -34,19 +34,19 @@ cd jivelite-autologin
 makepkg --asroot -c -i -s --noconfirm "$opt"
 cd ..
 
-if [ `pacman -Qq logitechmediaserver` == "logitechmediaserver" ]; then
+if [[ `pacman -Qq logitechmediaserver` == "logitechmediaserver" ]]; then
     cd logitechmediaserver-7.8
     makepkg --asroot -c -i -s --noconfirm "$opt"
     cd ..
 fi
 
-if [ `pacman -Qq logitechmediaserver-cpan` == "logitechmediaserver-cpan" ]; then
+if [[ `pacman -Qq logitechmediaserver-cpan` == "logitechmediaserver-cpan" ]]; then
     cd logitechmediaserver-7.9-cpan
     makepkg --asroot -c -i -s --noconfirm "$opt"
     cd ..
 fi
 
-if [ `pacman -Qq logitechmediaserver-lms` == "logitechmediaserver-lms" ]; then
+if [[ `pacman -Qq logitechmediaserver-lms` == "logitechmediaserver-lms" ]]; then
     cd logitechmediaserver-7.9-lms
     makepkg --asroot -c -i -s --noconfirm "$opt"
     cd ..
