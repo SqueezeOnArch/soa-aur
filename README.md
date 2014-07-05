@@ -44,7 +44,13 @@ cd soa-aur
 
 4) If you wish to install Logitech Media Server:
 
-./soa-install-lms.sh
+./soa-install-lms-7.8.sh
+
+or
+
+./soa-install-lms-7.9.sh
+
+depending on which version of LMS you wish to install.
 
 (this will take up to an hour depending on the performance of your machine)
 
@@ -57,3 +63,17 @@ cd soa-aur
 6) try to connect to the device using a web browser to see the configuration interface
 
 [this initial version does not support configuration of network conectivity - please see arch documentation for this]
+
+
+Updates:
+
+You may wish to run the following to update your arch system:
+
+pacman -Syu --noconfirm
+
+To update all of the installed SoA components:
+
+cd soa-aur
+
+./soa-update-all.sh
+
