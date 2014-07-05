@@ -5,7 +5,8 @@ pkgver=1
 pkgrel=1
 pkgdesc='Autologin for Jivelite'
 arch=('any')
-source=('service')
+source=('service'
+	'install')
 
 install=install
 
@@ -14,4 +15,5 @@ package() {
 	  install -Dm644 service "${pkgdir}/etc/systemd/system/getty@tty1.service.d/autologin.conf"
 }
 
-sha256sums=('77ced17fdc8184f42a24c59ef72fd330e4c62c334e5a259488365d126df99ffa')
+sha256sums=('77ced17fdc8184f42a24c59ef72fd330e4c62c334e5a259488365d126df99ffa'
+            'da4fb82cdebdfea70ba0be65a64cc37fa1f718aa0d113efc9b80a5b6f8d0b114')

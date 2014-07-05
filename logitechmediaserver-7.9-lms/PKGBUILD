@@ -11,9 +11,11 @@ arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
 depends=('perl>5.19' 'perl<5.21' 'logitechmediaserver-cpan')
 conflicts=('logitechmediaserver')
 source=('git+https://github.com/Logitech/slimserver.git#branch=public/7.9'
-        'service')
+        'service'
+	'install')
 sha1sums=('SKIP'
-          '734f84233fc7ab350b169f88aa5bb0cf3decad42')
+          '734f84233fc7ab350b169f88aa5bb0cf3decad42'
+          '9ff1f7abcf19c4fad8522860f0bc1a67c24d8fb4')
 
 install=install
 

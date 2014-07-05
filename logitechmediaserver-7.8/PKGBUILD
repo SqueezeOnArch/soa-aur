@@ -15,10 +15,12 @@ makedepends=('nasm' 'yasm' 'rsync')
 depends=('perl>5.19' 'perl<5.21')
 source=("https://github.com/Logitech/slimserver/archive/${_slimserver_commit}.tar.gz"
 	"https://github.com/Logitech/slimserver-vendor/archive/${_vendor_commit}.tar.gz"
-        'service')
+        'service'
+	'install')
 sha1sums=('3bfcbc6a29b6293f6034c5108958a604f4640b95'
           'bf5d24bc19f08e7654479b67027bb94443835c9f'
-          '734f84233fc7ab350b169f88aa5bb0cf3decad42')
+          '734f84233fc7ab350b169f88aa5bb0cf3decad42'
+          '9ff1f7abcf19c4fad8522860f0bc1a67c24d8fb4')
 
 install=install
 
