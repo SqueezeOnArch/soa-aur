@@ -22,7 +22,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 Use of Squeeze on Arch is at your own risk.
 
 
-Instructions for initial installation:
+# Instructions for initial installation:
 
 1) Install a base Linux Arch installtion on your machine and connect to it as root (using ssh or otherwise)
 
@@ -62,18 +62,14 @@ depending on which version of LMS you wish to install.
 
 6) try to connect to the device using a web browser to see the configuration interface
 
-[this initial version does not support configuration of network conectivity - please see arch documentation for this]
 
-
-Updates:
+# Updates:
 
 You may wish to run the following to update your arch system:
 
 pacman -Syu --noconfirm
 
 To update all of the installed SoA components:
-
-cd soa-aur
 
 ./soa-update-all.sh
 
