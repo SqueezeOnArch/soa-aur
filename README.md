@@ -1,7 +1,4 @@
-soa-aur
-=======
-
-Squeeze on Arch (SOA) Arch User Repository
+# Squeeze on Arch (SOA) Arch User Repository
 
 Repository for building Squeeze applications on Arch Linux
 
@@ -22,7 +19,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 Use of Squeeze on Arch is at your own risk.
 
 
-# Instructions for initial installation:
+## Instructions for initial installation
 
 1) Install a base Linux Arch installtion on your machine and connect to it as root (using ssh or otherwise)
 
@@ -63,7 +60,7 @@ depending on which version of LMS you wish to install.
 6) try to connect to the device using a web browser to see the configuration interface
 
 
-# Updates:
+## Updates
 
 You may wish to run the following to update your arch system:
 
