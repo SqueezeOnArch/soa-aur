@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pushd `dirname $0`
+
 if [ "$1" == "-f" ]; then
     opt="-f"
 else
@@ -63,3 +65,5 @@ if [[ `pacman -Qq logitechmediaserver-lms` == "logitechmediaserver-lms" ]]; then
     makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
     cd ..
 fi
+
+popd
