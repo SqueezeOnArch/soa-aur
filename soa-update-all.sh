@@ -1,6 +1,8 @@
 #!/bin/bash
 
-pushd `dirname $0`
+echo Update started: `date`
+
+pushd `dirname $0` > /dev/null
 
 if [ "$1" == "-f" ]; then
     opt="-f"
@@ -66,4 +68,6 @@ if [[ `pacman -Qq logitechmediaserver-lms` == "logitechmediaserver-lms" ]]; then
     cd ..
 fi
 
-popd
+popd > /dev/null
+
+echo Update complete: `date`
