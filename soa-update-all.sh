@@ -16,6 +16,8 @@ echo synchronising scripts
 git pull
 git checkout HEAD -- $(git ls-files -m)
 
+pacman -Syu --noconfirm
+
 if [[ `pacman -Qq turbolua 2>/dev/null` == "turbolua" ]]; then
 	cd turbolua
 	makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
