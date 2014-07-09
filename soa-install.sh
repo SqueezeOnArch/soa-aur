@@ -48,16 +48,4 @@ cd squeezelite
 makepkg --asroot -c -i -f -s --noconfirm
 cd ..
 
-echo "5/6 jivelite" > /tmp/soa-install-progress
-
-cd jivelite
-makepkg --asroot -c -i -f -s --noconfirm
-cd ..
-
-echo "6/6 jivelite-autologin" > /tmp/soa-install-progress
-
-cd jivelite-autologin
-makepkg --asroot -c -i -f -s --noconfirm
-cd ..
-
 rm /tmp/soa-install-progress
