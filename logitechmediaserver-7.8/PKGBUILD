@@ -3,7 +3,7 @@
 
 pkgname=logitechmediaserver
 pkgver=7.8
-pkgrel=5
+pkgrel=6
 _slimserver_commit=5de0f366e0e4e72fc5c14344acc7e91768398bd4
 _vendor_commit=a45cc7ac2f65bb4c0a538b6c0c5c80fba6d2faa9
 pkgdesc='Streaming audio server'
@@ -30,17 +30,29 @@ prepare() {
 	case $CARCH in
 		x86_64) rm -r Bin/arm-linux ;;
 		i686) rm -r Bin/arm-linux ;;
-		arm*) rm -r Bin/i386-linux ;;
+		arm*) rm -r Bin/i386-linux Bin/x86_64-linux Bin/arm-linux/flac Bin/arm-linux/faad ;;
 	esac
 	sed \
 		-e '/RUN_TESTS=1/c RUN_TESTS=0' \
 		-i ../slimserver-vendor-${_vendor_commit}/CPAN/buildme.sh
+	sed \
+		-e '/tar -zcvf $OUTPUT.tgz $OUTPUT/s/^/#/' \
+		-e '/rm -rf $OUTPUT/s/^/#/' \
+		-i ../slimserver-vendor-${_vendor_commit}/flac/buildme-linux.sh
+	sed \
+		-e '/tar -zcvf $OUTPUT.tgz $OUTPUT/s/^/#/' \
+		-e '/rm -rf $OUTPUT/s/^/#/' \
+		-i ../slimserver-vendor-${_vendor_commit}/faad2/buildme-linux.sh
 }
 
 build() {
 	cd "${srcdir}/slimserver-vendor-${_vendor_commit}/CPAN"
 	export CFLAGS=${CFLAGS//-O2/-Os}
 	sh buildme.sh
+	cd "${srcdir}/slimserver-vendor-${_vendor_commit}/flac"
+	sh buildme-linux.sh
+	cd "${srcdir}/slimserver-vendor-${_vendor_commit}/faad2"
+	sh buildme-linux.sh
 }
 
 package() {
@@ -48,6 +60,8 @@ package() {
 	install -d "${pkgdir}"/{opt,usr/share/licenses}/"${pkgname}"
 	cp -a * "${pkgdir}/opt/${pkgname}"
 	cp -a ../slimserver-vendor-${_vendor_commit}/CPAN/build/5.20/lib/perl5/*linux*/* "${pkgdir}/opt/${pkgname}/CPAN"
+	cp ../slimserver-vendor-${_vendor_commit}/flac/flac-build*/bin/flac "${pkgdir}/opt/logitechmediaserver/Bin"
+	cp ../slimserver-vendor-${_vendor_commit}/faad2/faad2-build*/bin/faad "${pkgdir}/opt/logitechmediaserver/Bin"
 	ln -s "/opt/${pkgname}/License.txt" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 	install -Dm644 ../service "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
 }

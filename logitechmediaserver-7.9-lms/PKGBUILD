@@ -2,7 +2,7 @@
 
 pkgname=logitechmediaserver-lms
 pkgver=7.9r19236.d443fa6
-pkgrel=1
+pkgrel=2
 pkgdesc='Streaming audio server'
 url='http://downloads.slimdevices.com/'
 license=('GPL' 'custom')
