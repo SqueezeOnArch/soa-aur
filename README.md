@@ -39,34 +39,11 @@ cd soa-aur
 
 (this will take several minutes to download and build the applications for your device)
 
-4) If you wish to install Logitech Media Server:
-
-./soa-install-lms-7.8.sh
-
-or
-
-./soa-install-lms-7.9.sh
-
-depending on which version of LMS you wish to install.
-
-(this will take up to an hour depending on the performance of your machine)
+4) Connect to the device using a web browser to see the configuration interface and install optional components such as jivelite and squeeze server
 
 5) If you wish to install a custom kernel for added features (currently only for wandboard to support additional spdif rates):
 
 ./soa-install-wand-kernel.sh
 
 (this will take up to an hour depending on the performance of your machine)
-
-6) try to connect to the device using a web browser to see the configuration interface
-
-
-## Updates
-
-You may wish to run the following to update your arch system:
-
-pacman -Syu --noconfirm
-
-To update all of the installed SoA components:
-
-./soa-update-all.sh
 
