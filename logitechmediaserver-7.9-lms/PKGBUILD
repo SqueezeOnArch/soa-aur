@@ -8,7 +8,7 @@ url='http://downloads.slimdevices.com/'
 license=('GPL' 'custom')
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
 [[ $CARCH = x86_64 ]] && optdepends=(lib32-{glibc,gcc-libs}': transcoding')
-depends=('perl>5.19' 'perl<5.21' 'logitechmediaserver-cpan')
+depends=('perl>5.19' 'perl<5.21' 'logitechmediaserver-cpan' 'lame')
 conflicts=('logitechmediaserver')
 source=('git+https://github.com/Logitech/slimserver.git#branch=public/7.9'
         'service'

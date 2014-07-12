@@ -12,10 +12,10 @@ license=('GPL' 'custom')
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
 makedepends=('nasm' 'yasm' 'rsync')
 [[ $CARCH = x86_64 ]] && optdepends=(lib32-{glibc,gcc-libs}': transcoding')
-depends=('perl>5.19' 'perl<5.21')
+depends=('perl>5.19' 'perl<5.21' 'lame')
 source=("https://github.com/Logitech/slimserver/archive/${_slimserver_commit}.tar.gz"
 	"https://github.com/Logitech/slimserver-vendor/archive/${_vendor_commit}.tar.gz"
-        'service'
+	'service'
 	'install')
 sha1sums=('3bfcbc6a29b6293f6034c5108958a604f4640b95'
           'bf5d24bc19f08e7654479b67027bb94443835c9f'
@@ -26,7 +26,7 @@ install=install
 
 prepare() {
 	cd "${srcdir}/slimserver-${_slimserver_commit}"
-	rm -r CPAN/arch Bin/{powerpc,sparc}-linux
+	rm -r CPAN/arch Bin/{powerpc,sparc}-linux Bin/i386-freebsd-64int Bin/MSWin32-x86-multi-thread Bin/darwin
 	case $CARCH in
 		x86_64) rm -r Bin/arm-linux ;;
 		i686) rm -r Bin/arm-linux ;;
