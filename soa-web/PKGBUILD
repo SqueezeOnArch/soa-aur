@@ -11,7 +11,6 @@ provides=('soa-web')
 conflicts=('soa-web')
 source=('git+https://github.com/SqueezeOnArch/soa-web.git'
 	'patch.patch'
-	'soa-web.conf'
 	'service'
 	'install')
 
@@ -37,12 +36,10 @@ package() {
 	 cp -a templ/* "${pkgdir}/usr/share/soa-web/templ"
 	 cp -a static/* "${pkgdir}/usr/share/soa-web/static"
 	 install -d "${pkgdir}/etc/credentials"
-	 install -Dm644 ../soa-web.conf "${pkgdir}/etc/soa-web.conf"
 	 install -Dm644 ../service "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
 }
 
 sha256sums=('SKIP'
             '128e320a7f395d439424069dffbfeae8a7a06a19f138efc601408f012518b68f'
-            'c79d184538e0896608417d4d4acc1d50fb474353add978e359e5a1e9eb1c3ce6'
             'be852b6da5b2c20ca2ab25f4c3940e4e49061e85b12efb0188e2d97836d4dae6'
             'd0f1e4bc9dcabbafe4624c54dc25a3c2e0fe0c37f19375eda4ebe97eb696da3a')
