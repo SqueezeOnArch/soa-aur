@@ -24,12 +24,6 @@ if [[ `pacman -Qq turbolua 2>/dev/null` == "turbolua" ]]; then
 	cd ..
 fi
 
-if [[ `pacman -Qq soa-web 2>/dev/null` == "soa-web" ]]; then
-	cd soa-web
-	makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
-	cd ..
-fi
-
 if [[ `pacman -Qq libsoxr 2>/dev/null` == "libsoxr" ]]; then
 	cd libsoxr
 	makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
@@ -70,6 +64,13 @@ if [[ `pacman -Qq logitechmediaserver-lms 2>/dev/null` == "logitechmediaserver-l
     cd logitechmediaserver-7.9-lms
     makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
     cd ..
+fi
+
+# update soa-web last as restarting the web interface can kill this script
+if [[ `pacman -Qq soa-web 2>/dev/null` == "soa-web" ]]; then
+	cd soa-web
+	makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
+	cd ..
 fi
 
 popd > /dev/null
