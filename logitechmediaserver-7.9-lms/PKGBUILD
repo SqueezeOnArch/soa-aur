@@ -35,7 +35,7 @@ prepare() {
 	case $CARCH in
 		x86_64) rm -r Bin/arm-linux ;;
 		i686) rm -r Bin/arm-linux Bin/x86_64-linux ;;
-		arm*) rm -r Bin/i386-linux Bin/x86_64-linux ;;
+		arm*) rm -r Bin/i386-linux Bin/x86_64-linux Bin/arm-linux/flac Bin/arm-linux/faad ;;
 	esac
 }
 

@@ -22,16 +22,31 @@ prepare() {
 	sed \
 	    -e '/RUN_TESTS=1/c RUN_TESTS=0' \
 	    -i slimserver-vendor/CPAN/buildme.sh
+	sed \
+	    -e '/tar -zcvf $OUTPUT.tgz $OUTPUT/s/^/#/' \
+	    -e '/rm -rf $OUTPUT/s/^/#/' \
+	    -i slimserver-vendor/flac/buildme-linux.sh
+	sed \
+	    -e '/tar -zcvf $OUTPUT.tgz $OUTPUT/s/^/#/' \
+	    -e '/rm -rf $OUTPUT/s/^/#/' \
+	    -i slimserver-vendor/faad2/buildme-linux.sh
 }
 
 build() {
 	cd "${srcdir}/slimserver-vendor/CPAN"
 	export CFLAGS=${CFLAGS//-O2/-Os}
 	sh buildme.sh
+	cd "${srcdir}/slimserver-vendor/flac"
+	sh buildme-linux.sh
+	cd "${srcdir}/slimserver-vendor/faad2"
+	sh buildme-linux.sh
 }
 
 package() {
 	cd ${srcdir}
 	install -d "${pkgdir}/opt/logitechmediaserver/CPAN"
+	install -d "${pkgdir}/opt/logitechmediaserver/Bin"
 	cp -a slimserver-vendor/CPAN/build/5.20/lib/perl5/*linux*/* "${pkgdir}/opt/logitechmediaserver/CPAN"
+	cp slimserver-vendor/flac/flac-build*/bin/flac "${pkgdir}/opt/logitechmediaserver/Bin"
+	cp slimserver-vendor/faad2/faad2-build*/bin/faad "${pkgdir}/opt/logitechmediaserver/Bin"
 }
