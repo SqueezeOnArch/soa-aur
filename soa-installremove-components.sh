@@ -12,8 +12,8 @@ pushd `dirname $0` > /dev/null
 
 # PKGBUILD files using git source get modified - checkout again
 echo sychronising scripts
-git pull
 git checkout HEAD -- $(git ls-files -m)
+git pull
 
 while (( "$#" )); do
 

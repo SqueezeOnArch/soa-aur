@@ -13,8 +13,8 @@ fi
 
 # PKGBUILD files using git source get modified - checkout again
 echo synchronising scripts
-git pull
 git checkout HEAD -- $(git ls-files -m)
+git pull
 
 pacman -Syu --noconfirm
 

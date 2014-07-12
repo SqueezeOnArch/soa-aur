@@ -13,8 +13,8 @@ if [ ! -d "$app" ]; then
 fi
 
 # PKGBUILD files using git source get modified - checkout again
-git pull
 git checkout HEAD -- $(git ls-files -m)
+git pull
 
 cd $app
 makepkg --asroot -c -i "$force" -s --noconfirm
