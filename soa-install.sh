@@ -24,25 +24,25 @@ done
 
 echo
 
-echo "1/6 turbolua" > /tmp/soa-install-progress
+echo "1/4 turbolua" > /tmp/soa-install-progress
 
 cd turbolua
 makepkg --asroot -c -i -f -s --noconfirm
 cd ..
 
-echo "2/6 soa-web" > /tmp/soa-install-progress
+echo "2/4 soa-web" > /tmp/soa-install-progress
 
 cd soa-web
 makepkg --asroot -c -i -f -s --noconfirm
 cd ..
 
-echo "3/6 libsoxr" > /tmp/soa-install-progress
+echo "3/4 libsoxr" > /tmp/soa-install-progress
 
 cd libsoxr
 makepkg --asroot -c -i -f -s --noconfirm
 cd ..
 
-echo "4/6 squeezelite" > /tmp/soa-install-progress
+echo "4/4 squeezelite" > /tmp/soa-install-progress
 
 cd squeezelite
 makepkg --asroot -c -i -f -s --noconfirm
