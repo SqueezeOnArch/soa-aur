@@ -1,8 +1,8 @@
 # Maintained: Adrian Smith <triode1@btinternet.com>
 
 pkgname=logitechmediaserver-lms
-pkgver=7.9r19236.d443fa6
-pkgrel=2
+pkgver=7.9
+pkgrel=1
 pkgdesc='Streaming audio server'
 url='http://downloads.slimdevices.com/'
 license=('GPL' 'custom')

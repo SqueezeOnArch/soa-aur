@@ -2,7 +2,7 @@
 
 pkgname=logitechmediaserver-cpan
 pkgver=7.9
-pkgrel=2
+pkgrel=1
 pkgdesc='Streaming audio server - cpan'
 license=('GPL' 'custom')
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
