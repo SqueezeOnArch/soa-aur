@@ -40,10 +40,3 @@ cd soa-aur
 (this will take several minutes to download and build the applications for your device)
 
 4) Connect to the device using a web browser to see the configuration interface and install optional components such as jivelite and squeeze server
-
-5) If you wish to install a custom kernel for added features (currently only for wandboard to support additional spdif rates):
-
-./soa-install-wand-kernel.sh
-
-(this will take up to an hour depending on the performance of your machine)
-
