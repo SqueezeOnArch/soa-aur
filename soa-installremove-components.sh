@@ -77,11 +77,12 @@ while (( "$#" )); do
 	if [[ "$component" == "linux-wandboard-soa" ]]; then
 		if [[ "$action" == "remove" ]]; then
 			pacman -R --noconfirm linux-wandboard-soa
-			pacman -S --noconfigm linux-wandboard
+			pacman -S --noconfirm linux-wandboard
 		fi
 		if [[ "$action" == "install" ]]; then
 			cd linux-wandboard
-			makepkg --asroot -c -i -s --noconfirm
+			makepkg --asroot -c -s --noconfirm
+			echo -e "y\ny\n" | makepkg --asroot -c -s -i
 			cd ..
 		fi
 	fi
