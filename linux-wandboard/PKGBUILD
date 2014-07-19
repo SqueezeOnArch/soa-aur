@@ -5,7 +5,7 @@
 buildarch=4
 
 pkgbase=linux-wandboard
-pkgname=${pkgbase}
+pkgname="${pkgbase}-soa"
 _commit=13697f2edf19fc99921376039bdb0ad595b48ebb
 _srcname=linux-${_commit}
 _kernelname=${pkgbase#linux}
@@ -76,9 +76,9 @@ package() {
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
   provides=('kernel26' "linux=${pkgver}")
-  conflicts=('linux')
+  conflicts=('linux' 'linux-wandboard')
   replaces=('linux-imx6-wandboard-dt')
-  install=${pkgname}.install
+  install=${pkgbase}.install
 
   cd "${srcdir}/${_srcname}"
 
@@ -98,7 +98,7 @@ package() {
   sed \
     -e  "s/KERNEL_NAME=.*/KERNEL_NAME=${_kernelname}/g" \
     -e  "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/g" \
-    -i "${startdir}/${pkgname}.install"
+    -i "${startdir}/${pkgbase}.install"
 
   # remove build and source links
   rm -f "${pkgdir}"/lib/modules/${_kernver}/{source,build}
