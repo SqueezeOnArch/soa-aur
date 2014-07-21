@@ -60,8 +60,8 @@ if [[ `pacman -Qq logitechmediaserver-cpan 2>/dev/null` == "logitechmediaserver-
     cd ..
 fi
 
-if [[ `pacman -Qq logitechmediaserver-cpan 2>/dev/null` == "logitechmediaserver-cpan" ]]; then
-    cd logitechmediaserver-7.9-cpan
+if [[ `pacman -Qq logitechmediaserver-lms 2>/dev/null` == "logitechmediaserver-lms" ]]; then
+    cd logitechmediaserver-7.9-lms
     makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
     cd ..
 fi
