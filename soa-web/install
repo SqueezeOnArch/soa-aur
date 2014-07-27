@@ -5,6 +5,9 @@ post_install() {
 	mkdir -p /mnt/disk4
 	mkdir -p /mnt/disk5
 	mkdir -p /mnt/disk6
+	if [ ! -f /etc/samba/smb.conf ]; then
+		cp /etc/samba/soa-smb.conf /etc/samba/smb.conf
+	fi
 	post_upgrade
 }
 
