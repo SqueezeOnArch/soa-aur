@@ -1,18 +1,19 @@
 # Contributor: Adrian Smith <triode1@btinternet.com>
 
 pkgname=soa-web
-pkgver=r5.ee06391
+pkgver=r23.c3eb90d
 pkgrel=1
 pkgdesc='Squeeze on Arch Web Interface'
 arch=('any')
 license=('GPL3')
-depends=('turbolua' 'lua51-filesystem' 'ntfs-3g' 'cifs-utils' 'nfs-utils')
+depends=('turbolua' 'lua51-filesystem' 'ntfs-3g' 'cifs-utils' 'nfs-utils' 'samba')
 provides=('soa-web')
 conflicts=('soa-web')
 source=('git+https://github.com/SqueezeOnArch/soa-web.git'
 	'patch.patch'
 	'service'
-	'install')
+	'install'
+	'smb.conf')
 
 install=install
 
@@ -37,9 +38,11 @@ package() {
 	 cp -a static/* "${pkgdir}/usr/share/soa-web/static"
 	 install -d "${pkgdir}/etc/credentials"
 	 install -Dm644 ../service "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
+	 install -Dm644 ../smb.conf "${pkgdir}/etc/samba/smb.conf"
 }
 
 sha256sums=('SKIP'
             '128e320a7f395d439424069dffbfeae8a7a06a19f138efc601408f012518b68f'
             'be852b6da5b2c20ca2ab25f4c3940e4e49061e85b12efb0188e2d97836d4dae6'
-            'd0f1e4bc9dcabbafe4624c54dc25a3c2e0fe0c37f19375eda4ebe97eb696da3a')
+            'd0f1e4bc9dcabbafe4624c54dc25a3c2e0fe0c37f19375eda4ebe97eb696da3a'
+            '40b66434d5906b17f03946c8c183c77b09cbe6d1391e1abf255c923a4a6a49af')
