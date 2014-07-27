@@ -5,13 +5,13 @@ post_install() {
 	mkdir -p /mnt/disk4
 	mkdir -p /mnt/disk5
 	mkdir -p /mnt/disk6
-	if [ ! -f /etc/samba/smb.conf ]; then
-		cp /etc/samba/soa-smb.conf /etc/samba/smb.conf
-	fi
 	post_upgrade
 }
 
 post_upgrade() {
+	if [ ! -f /etc/samba/smb.conf ]; then
+		cp /etc/samba/soa-smb.conf /etc/samba/smb.conf
+	fi
 	systemctl disable soa-web.service
 	systemctl enable soa-web.service
 	systemctl restart soa-web.service
