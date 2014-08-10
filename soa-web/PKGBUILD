@@ -1,7 +1,7 @@
 # Contributor: Adrian Smith <triode1@btinternet.com>
 
 pkgname=soa-web
-pkgver=r24.1e83177
+pkgver=r26.79a1c62
 pkgrel=1
 pkgdesc='Squeeze on Arch Web Interface'
 arch=('any')
@@ -44,5 +44,5 @@ package() {
 sha256sums=('SKIP'
             '128e320a7f395d439424069dffbfeae8a7a06a19f138efc601408f012518b68f'
             'be852b6da5b2c20ca2ab25f4c3940e4e49061e85b12efb0188e2d97836d4dae6'
-            '5d6ea437a7af35acaeb1fb91a197ceca96e5e97972e495b5ac828bbbbb1ee8e3'
-            '40b66434d5906b17f03946c8c183c77b09cbe6d1391e1abf255c923a4a6a49af')
+            'a6bf8245fa9f1711cf52b4e5b5761a2636518ce0a15118a3ee0091609b0c417c'
+            '322cb47c5074a5955538c7bf1efa41042c6f033a1b6b2c1c4d3f4e38b8065125')

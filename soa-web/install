@@ -1,17 +1,17 @@
 post_install() {
-	mkdir -p /mnt/disk1
-	mkdir -p /mnt/disk2
-	mkdir -p /mnt/disk3
-	mkdir -p /mnt/disk4
-	mkdir -p /mnt/disk5
-	mkdir -p /mnt/disk6
+	mkdir -p /mnt/disk1 && chown nobody.nobody /mnt/disk1
+	mkdir -p /mnt/disk2 && chown nobody.nobody /mnt/disk2
+	mkdir -p /mnt/disk3 && chown nobody.nobody /mnt/disk3
+	mkdir -p /storage   && chown nobody.nobody /storage
+	mkdir -p /share_ro  && chown nobody.nobody /share_ro
+	mkdir -p /share_rw  && chown nobody.nobody /share_rw
+	if [ ! -f /etc/samba/smb.conf ]; then
+		cp /etc/samba/soa-smb.conf /etc/samba/smb.conf
+	fi
 	post_upgrade
 }
 
 post_upgrade() {
-	if [ ! -f /etc/samba/smb.conf ]; then
-		cp /etc/samba/soa-smb.conf /etc/samba/smb.conf
-	fi
 	systemctl disable soa-web.service
 	systemctl enable soa-web.service
 	systemctl restart soa-web.service
