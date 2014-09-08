@@ -87,6 +87,19 @@ while (( "$#" )); do
 		fi
 	fi
 
+	if [[ "$component" == "linux-sun7i-soa" ]]; then
+		if [[ "$action" == "remove" ]]; then
+			pacman -R --noconfirm linux-sun7i-soa
+			pacman -S --noconfirm linux-sun7i
+		fi
+		if [[ "$action" == "install" ]]; then
+			cd linux-sun7i
+			makepkg --asroot -c -s --noconfirm
+			echo -e "y\ny\n" | makepkg --asroot -c -s -i
+			cd ..
+		fi
+	fi
+
 done
 
 popd > /dev/null

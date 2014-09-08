@@ -73,6 +73,12 @@ if [[ `pacman -Qq linux-wandboard-soa 2>/dev/null` == "linux-wandboard-soa" ]]; 
     cd ..
 fi
 
+if [[ `pacman -Qq linux-sun7i-soa 2>/dev/null` == "linux-sun7i-soa" ]]; then
+    cd linux-sun7i
+    makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
+    cd ..
+fi
+
 # update soa-web last as restarting the web interface can kill this script
 if [[ `pacman -Qq soa-web 2>/dev/null` == "soa-web" ]]; then
 	cd soa-web
