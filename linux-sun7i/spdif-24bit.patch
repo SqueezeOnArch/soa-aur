@@ -1,0 +1,72 @@
+diff -dur spdif-old/sndspdif.c sound/soc/sunxi/spdif/sndspdif.c
+--- spdif-old/sndspdif.c	2014-09-08 20:06:00.562577246 +0000
++++ sound/soc/sunxi/spdif/sndspdif.c	2014-09-08 20:19:36.612445822 +0000
+@@ -26,7 +26,7 @@
+ #include "sndspdif.h"
+ 
+ #define SNDSPDIF_RATES  (SNDRV_PCM_RATE_8000_192000|SNDRV_PCM_RATE_KNOT)
+-#define SNDSPDIF_FORMATS (SNDRV_PCM_FMTBIT_S16_LE)
++#define SNDSPDIF_FORMATS (SNDRV_PCM_FMTBIT_S24_LE)
+ 
+ struct sndspdif_priv {
+ 	int sysclk;
+Only in sound/soc/sunxi/spdif/: sndspdif.c~
+Binary files spdif-old/sndspdif.ko and sound/soc/sunxi/spdif/sndspdif.ko differ
+Binary files spdif-old/sndspdif.o and sound/soc/sunxi/spdif/sndspdif.o differ
+diff -dur spdif-old/sunxi_spdif.c sound/soc/sunxi/spdif/sunxi_spdif.c
+--- spdif-old/sunxi_spdif.c	2014-09-08 20:06:00.562577246 +0000
++++ sound/soc/sunxi/spdif/sunxi_spdif.c	2014-09-08 20:18:52.802439520 +0000
+@@ -139,7 +139,7 @@
+ 	reg_val &= ~SUNXI_SPDIF_TXCFG_SINGLEMOD;
+ 	reg_val |= SUNXI_SPDIF_TXCFG_ASS;
+ 	reg_val &= ~SUNXI_SPDIF_TXCFG_NONAUDIO;
+-	reg_val |= SUNXI_SPDIF_TXCFG_FMT16BIT;
++	reg_val |= SUNXI_SPDIF_TXCFG_FMT24BIT;
+ 	reg_val |= SUNXI_SPDIF_TXCFG_CHSTMODE;
+ 	writel(reg_val, sunxi_spdif.regs + SUNXI_SPDIF_TXCFG);
+ 
+@@ -502,12 +502,12 @@
+ 		.channels_min = 1,
+ 		.channels_max = 2,
+ 		.rates = SUNXI_SPDIF_RATES,
+-	.formats = SNDRV_PCM_FMTBIT_S16_LE,},
++	.formats = SNDRV_PCM_FMTBIT_S24_LE,},
+ 	.capture = {
+ 		.channels_min = 1,
+ 		.channels_max = 2,
+ 		.rates = SUNXI_SPDIF_RATES,
+-		.formats = SNDRV_PCM_FMTBIT_S16_LE,},
++		.formats = SNDRV_PCM_FMTBIT_S24_LE,},
+ 	.symmetric_rates = 1,
+ 	.ops = &sunxi_spdif_dai_ops,
+ };
+Only in sound/soc/sunxi/spdif/: sunxi_spdif.c~
+Binary files spdif-old/sunxi_spdif.ko and sound/soc/sunxi/spdif/sunxi_spdif.ko differ
+Binary files spdif-old/sunxi_spdif.o and sound/soc/sunxi/spdif/sunxi_spdif.o differ
+diff -dur spdif-old/sunxi_spdma.c sound/soc/sunxi/spdif/sunxi_spdma.c
+--- spdif-old/sunxi_spdma.c	2014-09-08 20:06:00.562577246 +0000
++++ sound/soc/sunxi/spdif/sunxi_spdma.c	2014-09-08 20:17:57.522432203 +0000
+@@ -41,7 +41,7 @@
+ 	.info			= SNDRV_PCM_INFO_INTERLEAVED | SNDRV_PCM_INFO_BLOCK_TRANSFER |
+ 				      SNDRV_PCM_INFO_MMAP | SNDRV_PCM_INFO_MMAP_VALID |
+ 				      SNDRV_PCM_INFO_PAUSE | SNDRV_PCM_INFO_RESUME,
+-	.formats		= SNDRV_PCM_FMTBIT_S16_LE,
++	.formats		= SNDRV_PCM_FMTBIT_S24_LE,
+ 	.rates			= SNDRV_PCM_RATE_8000_192000 | SNDRV_PCM_RATE_KNOT,
+ 	.rate_min		= 8000,
+ 	.rate_max		= 192000,
+@@ -197,9 +197,9 @@
+ #else
+ 		dma_config_t spdif_dma_conf;
+ 		memset(&spdif_dma_conf, 0, sizeof(spdif_dma_conf));
+-		spdif_dma_conf.xfer_type.src_data_width = DATA_WIDTH_16BIT;
++		spdif_dma_conf.xfer_type.src_data_width = DATA_WIDTH_32BIT;
+ 		spdif_dma_conf.xfer_type.src_bst_len = DATA_BRST_4;
+-		spdif_dma_conf.xfer_type.dst_data_width = DATA_WIDTH_16BIT;
++		spdif_dma_conf.xfer_type.dst_data_width = DATA_WIDTH_32BIT;
+ 		spdif_dma_conf.xfer_type.dst_bst_len = DATA_BRST_4;
+ 		spdif_dma_conf.address_type.src_addr_mode = NDMA_ADDR_INCREMENT;
+ 		spdif_dma_conf.address_type.dst_addr_mode = NDMA_ADDR_NOCHANGE;
+Only in sound/soc/sunxi/spdif/: sunxi_spdma.c~
+Binary files spdif-old/sunxi_spdma.ko and sound/soc/sunxi/spdif/sunxi_spdma.ko differ
+Binary files spdif-old/sunxi_spdma.o and sound/soc/sunxi/spdif/sunxi_spdma.o differ
