@@ -9,3 +9,4 @@
    p->stopband_begin = 1;
    p->precision = !quality? 0: quality < 3? 16 : quality < 8? 4 + quality * 4 : 55 - quality * 4;
    rej = p->precision * linear_to_dB(2.);
+
