@@ -80,7 +80,7 @@ package() {
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
   provides=('kernel26' "linux=${pkgver}" 'aufs_friendly')
-  conflicts=('linux-omap' 'linux-imx6' 'linux-armada370')
+  conflicts=('linux' 'linux-sun7i')
   install=${pkgbase}.install
 
   cd "${srcdir}/${_srcname}"
