@@ -5,36 +5,36 @@ buildarch=4
 
 pkgbase=linux-sun7i
 pkgname="${pkgbase}-soa"
-_commit=e37d760b363888f3a65cd6455c99a75cac70a7b8
+_commit=dan-3.4.104
 _srcname=linux-sunxi-${_commit}
 _kernelname=${pkgbase#linux}
-_desc="sun7i"
-pkgver=3.4.90
-pkgrel=4
+_desc="ctsc"
+pkgver=3.4.104
+pkgrel=1
 arch=('armv7h')
-url="https://github.com/linux-sunxi/linux-sunxi/"
+url="https://github.com/dan-and/linux-sunxi/"
 license=('GPL2')
-makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'uboot-mkimage' 'git')
+makedepends=('xmlto' 'unzip' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'uboot-mkimage' 'git')
 options=('!strip')
-source=("https://github.com/linux-sunxi/linux-sunxi/archive/${_commit}.tar.gz"
+source=("https://github.com/dan-and/linux-sunxi/archive/dan-3.4.104.zip"
         'config'
-        'working-bcmdhd-driver.patch'
-	'spdif-24bit.patch')
-md5sums=('dbf73f4cb6b1399e73449f4e91bf5694'
-         '75d4998cd9544be9423d80564441ec31'
-         '07c260ca97572a830778362c7b744f9c'
-         '7fa0fc1b725b1ca19b8d52b720941ebd')
+	'spdif-24bit.patch'
+        '250Hz.patch')
+md5sums=('10efd76673a3cf9a03923c0d43e59472'
+         '28c3e74c860e0d484ad6109d77bccea0'
+         '7fa0fc1b725b1ca19b8d52b720941ebd'
+         'b875bd2b720515864014cda9e940ae3a')
 
 prepare() {
   cd "${srcdir}/${_srcname}"
 
   cat "${srcdir}/config" > ./.config
 
-  # patch bcmdhd driver with a working version
-  patch -Np1 -i "${srcdir}/working-bcmdhd-driver.patch"
-
   # patch spdif driver
   patch -Np0 -i "${srcdir}/spdif-24bit.patch"
+
+  # patch scheduler
+  patch -Np0 -i "${srcdir}/250Hz.patch"
 
   # add pkgrel to extraversion
   sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-${pkgrel}|" Makefile
@@ -72,7 +72,7 @@ build() {
   #yes "" | make config
 
   # build!
-  make ${MAKEFLAGS} uImage modules
+  make ${MAKEFLAGS} -j2 uImage modules
 }
 
 package() {
