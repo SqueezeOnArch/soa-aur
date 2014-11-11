@@ -18,12 +18,10 @@ makedepends=('xmlto' 'unzip' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'uboot-mkimag
 options=('!strip')
 source=("https://github.com/dan-and/linux-sunxi/archive/dan-3.4.104.zip"
         'config'
-	'spdif-24bit.patch'
-        '250Hz.patch')
+	'spdif-24bit.patch')
 md5sums=('10efd76673a3cf9a03923c0d43e59472'
-         '28c3e74c860e0d484ad6109d77bccea0'
-         '7fa0fc1b725b1ca19b8d52b720941ebd'
-         'b875bd2b720515864014cda9e940ae3a')
+         '4897266d358f5853f576ea4959f36a42'
+	 '7fa0fc1b725b1ca19b8d52b720941ebd')
 
 prepare() {
   cd "${srcdir}/${_srcname}"
@@ -32,9 +30,6 @@ prepare() {
 
   # patch spdif driver
   patch -Np0 -i "${srcdir}/spdif-24bit.patch"
-
-  # patch scheduler
-  patch -Np0 -i "${srcdir}/250Hz.patch"
 
   # add pkgrel to extraversion
   sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-${pkgrel}|" Makefile
