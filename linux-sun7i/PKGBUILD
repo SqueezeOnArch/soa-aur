@@ -18,10 +18,10 @@ makedepends=('xmlto' 'unzip' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'uboot-mkimag
 options=('!strip')
 source=("https://github.com/dan-and/linux-sunxi/archive/dan-3.4.104.zip"
         'config'
-	'spdif-24bit.patch')
-md5sums=('10efd76673a3cf9a03923c0d43e59472'
+		'spdif-24bit.patch')
+md5sums=('5d26265a70fdc15a9673f67b944ccfb7'
          '4897266d358f5853f576ea4959f36a42'
-	 '7fa0fc1b725b1ca19b8d52b720941ebd')
+         '7fa0fc1b725b1ca19b8d52b720941ebd')
 
 prepare() {
   cd "${srcdir}/${_srcname}"
