@@ -100,6 +100,15 @@ while (( "$#" )); do
 		fi
 	fi
 
+	if [[ "$component" == "linux-raspberrypi-latest" ]]; then
+		if [[ "$action" == "remove" ]]; then
+			echo -e "y\ny\n" | pacman -S linux-raspberrypi
+		fi
+		if [[ "$action" == "install" ]]; then
+			echo -e "y\ny\n" | pacman -S linux-raspberrypi-latest
+		fi
+	fi
+
 done
 
 popd > /dev/null
