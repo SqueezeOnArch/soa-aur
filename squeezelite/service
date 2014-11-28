@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Nice=-10
-LimitRTPRIO=50
+LimitRTPRIO=99
 LimitMEMLOCK=infinity
 User=squeezelite
 Group=squeezelite
