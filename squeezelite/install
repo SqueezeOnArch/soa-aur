@@ -11,6 +11,9 @@ pre_upgrade() {
 post_upgrade() {
 	touch /var/log/squeezelite.log
 	chown -R squeezelite:squeezelite /var/log/squeezelite.log
+	if [ ! -f /etc/squeezelite.conf ]; then
+		cp /etc/squeezelite.conf.default /etc/squeezelite.conf
+	fi
 
 	systemctl enable squeezelite.service
 	systemctl restart squeezelite.service

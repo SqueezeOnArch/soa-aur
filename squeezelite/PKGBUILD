@@ -1,7 +1,7 @@
 # Contributor: Adrian Smith <triode1@btinternet.com>
 
 pkgname=squeezelite
-pkgver=r110.0b90637
+pkgver=r124.4c03bd0
 pkgrel=1
 pkgdesc='Lightweight headless squeezebox emulator'
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
@@ -19,8 +19,8 @@ source=('git+https://code.google.com/p/squeezelite/'
 install=install
 
 pkgver() {
-         cd "$pkgname"
-         printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+	cd "$pkgname"
+	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 build() {
@@ -36,12 +36,13 @@ package() {
 
 	# Main binary
 	install -m0755 -D squeezelite "${pkgdir}/usr/bin/squeezelite"
-	install -Dm644 ../conffile "${pkgdir}/etc/${pkgname}.conf"
+	install -Dm644 ../conffile "${pkgdir}/etc/${pkgname}.conf.default"
 	install -Dm644 ../service "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
 }
+
 
 sha256sums=('SKIP'
             '0a8d823a8405093fd720db00d60734f782e044102eedb8004c277f1a26661ef3'
             'f0753a1cbd0194119226587ff9c12257438674d9b8e0179d22f0d5461ad3a70a'
-            '7271fb7194cedaf124f879cc3d8b00145105e2436c17212b7b73d49b9fd8e52f')
+            '0f19c6b028ad6005c21039a3cb996824ad3be54e69cc010db4c9a409ce4cdb96')
 
