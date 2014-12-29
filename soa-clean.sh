@@ -1,11 +1,17 @@
 #!/bin/bash
 
+opt="-f"
+
+if [ "$1" == "-f" ]; then
+	opt="-d -f -f"
+fi
+
 echo Clean started: `date`
 echo
 
 pushd `dirname $0` > /dev/null
 
-git clean -f $1
+git clean $opt
 
 popd > /dev/null
 
