@@ -6,6 +6,7 @@ After=network.target
 Nice=-10
 LimitRTPRIO=99
 LimitMEMLOCK=infinity
+ControlGroupAttribute=cpu.rt_runtime_us 500000
 User=squeezelite
 Group=squeezelite
 SupplementaryGroups=audio
