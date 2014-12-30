@@ -5,7 +5,7 @@ buildarch=4
 
 pkgbase=linux-sun7i
 pkgname="${pkgbase}-soa"
-_commit=dan-3.4.104
+_commit=ac7086ad80bad270005ca71fed7cf33976b27cac
 _srcname=linux-sunxi-${_commit}
 _kernelname=${pkgbase#linux}
 _desc="ctsc"
@@ -16,11 +16,11 @@ url="https://github.com/dan-and/linux-sunxi/"
 license=('GPL2')
 makedepends=('xmlto' 'unzip' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'uboot-mkimage' 'git')
 options=('!strip')
-source=("https://github.com/dan-and/linux-sunxi/archive/dan-3.4.104.zip"
+source=("https://github.com/dan-and/linux-sunxi/archive/${_commit}.zip"
         'config'
-		'spdif-24bit.patch')
-md5sums=('SKIP'
-         '4897266d358f5853f576ea4959f36a42'
+        'spdif-24bit.patch')
+md5sums=('c1158bb49a50a6e3024d3b6cf93c3442'
+         '1a918665136977ab5be749cdcd34f4a2'
          '7fa0fc1b725b1ca19b8d52b720941ebd')
 
 prepare() {
