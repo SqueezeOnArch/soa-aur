@@ -16,73 +16,73 @@ echo synchronising scripts
 git checkout HEAD -- $(git ls-files -m)
 git pull
 
-pacman -Syu --noconfirm
+sudo pacman -Syu --noconfirm
 
 if [[ `pacman -Qq turbolua 2>/dev/null` == "turbolua" ]]; then
 	cd turbolua
-	makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
+	makepkg -c -i -s --noconfirm --noprogressbar "$opt"
 	cd ..
 fi
 
 if [[ `pacman -Qq libsoxr 2>/dev/null` == "libsoxr" ]]; then
 	cd libsoxr
-	makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
+	makepkg -c -i -s --noconfirm --noprogressbar "$opt"
 	cd ..
 fi
 
 if [[ `pacman -Qq squeezelite 2>/dev/null` == "squeezelite" ]]; then
 	cd squeezelite
-	makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
+	makepkg -c -i -s --noconfirm --noprogressbar "$opt"
 	cd ..
 fi
 
 if [[ `pacman -Qq jivelite 2>/dev/null` == "jivelite" ]]; then
 	cd jivelite
-	makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
+	makepkg -c -i -s --noconfirm --noprogressbar "$opt"
 	cd ..
 fi
 
 if [[ `pacman -Qq jivelite-autologin 2>/dev/null` == "jivelite-autologin" ]]; then
 	cd jivelite-autologin
-	makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
+	makepkg -c -i -s --noconfirm --noprogressbar "$opt"
 	cd ..
 fi
 
 if [[ `pacman -Qq logitechmediaserver 2>/dev/null` == "logitechmediaserver" ]]; then
     cd logitechmediaserver-7.8
-    makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
+    makepkg -c -i -s --noconfirm --noprogressbar "$opt"
     cd ..
 fi
 
 if [[ `pacman -Qq logitechmediaserver-cpan 2>/dev/null` == "logitechmediaserver-cpan" ]]; then
     cd logitechmediaserver-7.9-cpan
-    makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
+    makepkg -c -i -s --noconfirm --noprogressbar "$opt"
     cd ..
 fi
 
 if [[ `pacman -Qq logitechmediaserver-lms 2>/dev/null` == "logitechmediaserver-lms" ]]; then
     cd logitechmediaserver-7.9-lms
-    makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
+    makepkg -c -i -s --noconfirm --noprogressbar "$opt"
     cd ..
 fi
 
 # custom kernels
 if [[ `pacman -Qq linux-wandboard-soa 2>/dev/null` == "linux-wandboard-soa" ]]; then
     cd linux-wandboard
-    makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
+    makepkg -c -i -s --noconfirm --noprogressbar "$opt"
     cd ..
 fi
 
 if [[ `pacman -Qq linux-sun7i-soa 2>/dev/null` == "linux-sun7i-soa" ]]; then
     cd linux-sun7i
-    makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
+    makepkg -c -i -s --noconfirm --noprogressbar "$opt"
     cd ..
 fi
 
 # update soa-web last as restarting the web interface can kill this script
 if [[ `pacman -Qq soa-web 2>/dev/null` == "soa-web" ]]; then
 	cd soa-web
-	makepkg --asroot -c -i -s --noconfirm --noprogressbar "$opt"
+	makepkg -c -i -s --noconfirm --noprogressbar "$opt"
 	cd ..
 fi
 

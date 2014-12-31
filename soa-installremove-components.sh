@@ -23,89 +23,89 @@ while (( "$#" )); do
     
 	if [[ "$component" == "squeezelite" ]]; then
 		if [[ "$action" == "remove" ]]; then
-			pacman -R --noconfirm squeezelite libsoxr
+			sudo pacman -R --noconfirm squeezelite libsoxr
 		fi
 		if [[ "$action" == "install" ]]; then
 			cd libsoxr
-			makepkg --asroot -c -i -f -s --noconfirm
+			makepkg -c -i -f -s --noconfirm
 			cd ..
 			cd squeezelite
-			makepkg --asroot -c -i -f -s --noconfirm
+			makepkg -c -i -f -s --noconfirm
 			cd ..
 		fi
 	fi
 	
 	if [[ "$component" == "jivelite" ]]; then
 		if [[ "$action" == "remove" ]]; then
-			pacman -R --noconfirm jivelite-autologin jivelite
+			sudo pacman -R --noconfirm jivelite-autologin jivelite
 		fi
 		if [[ "$action" == "install" ]]; then
 			cd jivelite
-			makepkg --asroot -c -i -f -s --noconfirm
+			makepkg -c -i -f -s --noconfirm
 			cd ..
 			cd jivelite-autologin
-			makepkg --asroot -c -i -f -s --noconfirm
+			makepkg -c -i -f -s --noconfirm
 			cd ..
 		fi
 	fi
 	
 	if [[ "$component" == "server78" ]]; then
 		if [[ "$action" == "remove" ]]; then
-			pacman -R --noconfirm logitechmediaserver
+			sudo pacman -R --noconfirm logitechmediaserver
 		fi
 		if [[ "$action" == "install" ]]; then
 			cd logitechmediaserver-7.8
-			makepkg --asroot -c -i -s --noconfirm
+			makepkg -c -i -s --noconfirm
 			cd ..
 		fi
 	fi
 	
 	if [[ "$component" == "server79" ]]; then
 		if [[ "$action" == "remove" ]]; then
-			pacman -R --noconfirm logitechmediaserver-lms logitechmediaserver-cpan
+			sudo pacman -R --noconfirm logitechmediaserver-lms logitechmediaserver-cpan
 		fi
 		if [[ "$action" == "install" ]]; then
 			cd logitechmediaserver-7.9-cpan
-			makepkg --asroot -c -i -s --noconfirm
+			makepkg -c -i -s --noconfirm
 			cd ..
 			cd logitechmediaserver-7.9-lms
-			makepkg --asroot -c -i -s --noconfirm
+			makepkg -c -i -s --noconfirm
 			cd ..
 		fi
 	fi
 	
 	if [[ "$component" == "linux-wandboard-soa" ]]; then
 		if [[ "$action" == "remove" ]]; then
-			pacman -R --noconfirm linux-wandboard-soa
-			pacman -S --noconfirm linux-wandboard
+			sudo pacman -R --noconfirm linux-wandboard-soa
+			sudo pacman -S --noconfirm linux-wandboard
 		fi
 		if [[ "$action" == "install" ]]; then
 			cd linux-wandboard
-			makepkg --asroot -c -s --noconfirm
-			echo -e "y\ny\n" | makepkg --asroot -c -s -i
+			makepkg -c -s --noconfirm
+			echo -e "y\ny\n" | makepkg -c -s -i
 			cd ..
 		fi
 	fi
 
 	if [[ "$component" == "linux-sun7i-soa" ]]; then
 		if [[ "$action" == "remove" ]]; then
-			pacman -R --noconfirm linux-sun7i-soa
-			pacman -S --noconfirm linux-sun7i
+			sudo pacman -R --noconfirm linux-sun7i-soa
+			sudo pacman -S --noconfirm linux-sun7i
 		fi
 		if [[ "$action" == "install" ]]; then
 			cd linux-sun7i
-			makepkg --asroot -c -s --noconfirm
-			echo -e "y\ny\n" | makepkg --asroot -c -s -i
+			makepkg -c -s --noconfirm
+			echo -e "y\ny\n" | makepkg -c -s -i
 			cd ..
 		fi
 	fi
 
 	if [[ "$component" == "linux-raspberrypi-latest" ]]; then
 		if [[ "$action" == "remove" ]]; then
-			echo -e "y\ny\n" | pacman -S linux-raspberrypi
+			echo -e "y\ny\n" | sudo pacman -S linux-raspberrypi
 		fi
 		if [[ "$action" == "install" ]]; then
-			echo -e "y\ny\n" | pacman -S linux-raspberrypi-latest
+			echo -e "y\ny\n" | sudo pacman -S linux-raspberrypi-latest
 		fi
 	fi
 

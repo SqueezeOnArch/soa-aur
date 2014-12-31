@@ -17,6 +17,6 @@ git checkout HEAD -- $(git ls-files -m)
 git pull
 
 cd $app
-makepkg --asroot -c -i "$force" -s --noconfirm
+makepkg -c -i "$force" -s --noconfirm
 cd ..
 
