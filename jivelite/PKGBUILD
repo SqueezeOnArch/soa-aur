@@ -36,6 +36,12 @@ package() {
 	 cp -a lib/lua/5.1/* "${pkgdir}/usr/share/jive"
 	 install -Dm644 ../fb.modes "${pkgdir}/etc/fb.modes"
 	 install -Dm644 LICENSE "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
+	 install -Dm644 lib-src/lua-cjson-2.1.0/LICENSE "${pkgdir}"/usr/share/licenses/${pkgname}/lua-cjson-2.1.0-LICENSE
+	 install -Dm644 lib-src/luaexpat-1.2.0/doc/us/license.html "${pkgdir}"/usr/share/licenses/${pkgname}/luaexpat-1.2.0-license.html
+	 install -Dm644 lib-src/luafilesystem-1.6.2/doc/us/license.html "${pkgdir}"/usr/share/licenses/${pkgname}/luafilesystem-1.6.2-license.html
+	 install -Dm644 lib-src/luamd5/README "${pkgdir}"/usr/share/licenses/${pkgname}/luafilesystem-1.6.2-README
+	 install -Dm644 lib-src/luasocket-2.0.2/LICENSE "${pkgdir}"/usr/share/licenses/${pkgname}/luasocket-2.0.2-LICENSE
+	 install -Dm644 lib-src/luazipfilter/LICENSE "${pkgdir}"/usr/share/licenses/${pkgname}/luazipfilter-LICENSE
 }
 
 sha256sums=('SKIP'
