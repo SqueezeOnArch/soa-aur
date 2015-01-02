@@ -1,7 +1,7 @@
 # Contributor: Adrian Smith <triode1@btinternet.com>
 
 pkgname=jivelite
-pkgver=r71.417f1c8
+pkgver=r76.de07c79
 pkgrel=1
 pkgdesc='Squeezebox Control Application'
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
@@ -35,6 +35,7 @@ package() {
 	 cp -a share/lua/5.1/* "${pkgdir}/usr/share/jive"
 	 cp -a lib/lua/5.1/* "${pkgdir}/usr/share/jive"
 	 install -Dm644 ../fb.modes "${pkgdir}/etc/fb.modes"
+	 install -Dm644 LICENSE "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
 }
 
 sha256sums=('SKIP'

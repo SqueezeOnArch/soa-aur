@@ -1,7 +1,7 @@
 # Contributor: Adrian Smith <triode1@btinternet.com>
 
 pkgname=squeezelite
-pkgver=r124.4c03bd0
+pkgver=r131.a2de5cd
 pkgrel=1
 pkgdesc='Lightweight headless squeezebox emulator'
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
@@ -38,6 +38,7 @@ package() {
 	install -m0755 -D squeezelite "${pkgdir}/usr/bin/squeezelite"
 	install -Dm644 ../conffile "${pkgdir}/etc/${pkgname}.conf.default"
 	install -Dm644 ../service "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
+	install -Dm644 LICENSE.txt "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
 }
 
 

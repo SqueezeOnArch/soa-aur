@@ -1,7 +1,7 @@
 # Contributor: Adrian Smith <triode1@btinternet.com>
 
 pkgname=soa-web
-pkgver=r26.79a1c62
+pkgver=r52.d33c6df
 pkgrel=1
 pkgdesc='Squeeze on Arch Web Interface'
 arch=('any')
@@ -39,6 +39,7 @@ package() {
 	 install -d "${pkgdir}/etc/credentials"
 	 install -Dm644 ../service "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
 	 install -Dm644 ../smb.conf "${pkgdir}/etc/samba/soa-smb.conf"
+	 install -Dm644 LICENSE "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
 }
 
 sha256sums=('SKIP'
