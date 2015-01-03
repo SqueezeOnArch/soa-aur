@@ -24,28 +24,40 @@ done
 
 echo
 
-echo "1/4 turbolua" > /tmp/soa-install-progress
+pushd `dirname $0` > /dev/null
 
-cd turbolua
-makepkg -c -i -f -s --noconfirm
-cd ..
+if [[ -f ../binary-repo ]]; then
 
-echo "2/4 soa-web" > /tmp/soa-install-progress
+	sudo pacman -S --noconfirm turbolua libsoxr squeezelite soa-web 
 
-cd soa-web
-makepkg -c -i -f -s --noconfirm
-cd ..
+else
 
-echo "3/4 libsoxr" > /tmp/soa-install-progress
+	echo "1/4 turbolua" > /tmp/soa-install-progress
 
-cd libsoxr
-makepkg -c -i -f -s --noconfirm
-cd ..
+	cd turbolua
+	makepkg -c -i -f -s --noconfirm
+	cd ..
 
-echo "4/4 squeezelite" > /tmp/soa-install-progress
+	echo "2/4 soa-web" > /tmp/soa-install-progress
+	
+	cd soa-web
+	makepkg -c -i -f -s --noconfirm
+	cd ..
+	
+	echo "3/4 libsoxr" > /tmp/soa-install-progress
+	
+	cd libsoxr
+	makepkg -c -i -f -s --noconfirm
+	cd ..
+	
+	echo "4/4 squeezelite" > /tmp/soa-install-progress
 
-cd squeezelite
-makepkg -c -i -f -s --noconfirm
-cd ..
+	cd squeezelite
+	makepkg -c -i -f -s --noconfirm
+	cd ..
+	
+	rm /tmp/soa-install-progress
 
-rm /tmp/soa-install-progress
+fi
+
+popd > /dev/null

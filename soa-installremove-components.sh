@@ -26,12 +26,19 @@ while (( "$#" )); do
 			sudo pacman -R --noconfirm squeezelite libsoxr
 		fi
 		if [[ "$action" == "install" ]]; then
-			cd libsoxr
-			makepkg -c -i -f -s --noconfirm
-			cd ..
-			cd squeezelite
-			makepkg -c -i -f -s --noconfirm
-			cd ..
+			if [[ -f ../binary-repo ]]; then
+				sudo pacman -S --noconfirm squeezelite
+			else
+				if [[ ! -f /usr/bin/gcc ]]; then
+					sudo pacman -S --noconfirm base-devel
+				end
+				cd libsoxr
+				makepkg -c -i -f -s --noconfirm
+				cd ..
+				cd squeezelite
+				makepkg -c -i -f -s --noconfirm
+				cd ..
+			fi
 		fi
 	fi
 	
@@ -40,12 +47,19 @@ while (( "$#" )); do
 			sudo pacman -R --noconfirm jivelite-autologin jivelite
 		fi
 		if [[ "$action" == "install" ]]; then
-			cd jivelite
-			makepkg -c -i -f -s --noconfirm
-			cd ..
-			cd jivelite-autologin
-			makepkg -c -i -f -s --noconfirm
-			cd ..
+			if [[ -f ../binary-repo ]]; then
+				sudo pacman -S --noconfirm jivelite jivelite-autologin
+			else
+				if [[ ! -f /usr/bin/gcc ]]; then
+					sudo pacman -S --noconfirm base-devel
+				end
+				cd jivelite
+				makepkg -c -i -f -s --noconfirm
+				cd ..
+				cd jivelite-autologin
+				makepkg -c -i -f -s --noconfirm
+				cd ..
+			fi
 		fi
 	fi
 	
@@ -54,6 +68,9 @@ while (( "$#" )); do
 			sudo pacman -R --noconfirm logitechmediaserver
 		fi
 		if [[ "$action" == "install" ]]; then
+			if [[ ! -f /usr/bin/gcc ]]; then
+				sudo pacman -S --noconfirm base-devel
+			end
 			cd logitechmediaserver-7.8
 			makepkg -c -i -s --noconfirm
 			cd ..
@@ -65,6 +82,9 @@ while (( "$#" )); do
 			sudo pacman -R --noconfirm logitechmediaserver-lms logitechmediaserver-cpan
 		fi
 		if [[ "$action" == "install" ]]; then
+			if [[ ! -f /usr/bin/gcc ]]; then
+				sudo pacman -S --noconfirm base-devel
+			end
 			cd logitechmediaserver-7.9-cpan
 			makepkg -c -i -s --noconfirm
 			cd ..
@@ -80,6 +100,9 @@ while (( "$#" )); do
 			sudo pacman -S --noconfirm linux-wandboard
 		fi
 		if [[ "$action" == "install" ]]; then
+			if [[ ! -f /usr/bin/gcc ]]; then
+				sudo pacman -S --noconfirm base-devel
+			end
 			cd linux-wandboard
 			makepkg -c -s --noconfirm
 			echo -e "y\ny\n" | makepkg -c -s -i
@@ -93,6 +116,9 @@ while (( "$#" )); do
 			sudo pacman -S --noconfirm linux-sun7i
 		fi
 		if [[ "$action" == "install" ]]; then
+			if [[ ! -f /usr/bin/gcc ]]; then
+				sudo pacman -S --noconfirm base-devel
+			end
 			cd linux-sun7i
 			makepkg -c -s --noconfirm
 			echo -e "y\ny\n" | makepkg -c -s -i
