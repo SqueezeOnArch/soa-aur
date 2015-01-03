@@ -31,7 +31,7 @@ while (( "$#" )); do
 			else
 				if [[ ! -f /usr/bin/gcc ]]; then
 					sudo pacman -S --noconfirm base-devel
-				end
+				fi
 				cd libsoxr
 				makepkg -c -i -f -s --noconfirm
 				cd ..
@@ -52,7 +52,7 @@ while (( "$#" )); do
 			else
 				if [[ ! -f /usr/bin/gcc ]]; then
 					sudo pacman -S --noconfirm base-devel
-				end
+				fi
 				cd jivelite
 				makepkg -c -i -f -s --noconfirm
 				cd ..
@@ -70,7 +70,7 @@ while (( "$#" )); do
 		if [[ "$action" == "install" ]]; then
 			if [[ ! -f /usr/bin/gcc ]]; then
 				sudo pacman -S --noconfirm base-devel
-			end
+			fi
 			cd logitechmediaserver-7.8
 			makepkg -c -i -s --noconfirm
 			cd ..
@@ -84,7 +84,7 @@ while (( "$#" )); do
 		if [[ "$action" == "install" ]]; then
 			if [[ ! -f /usr/bin/gcc ]]; then
 				sudo pacman -S --noconfirm base-devel
-			end
+			fi
 			cd logitechmediaserver-7.9-cpan
 			makepkg -c -i -s --noconfirm
 			cd ..
@@ -102,7 +102,7 @@ while (( "$#" )); do
 		if [[ "$action" == "install" ]]; then
 			if [[ ! -f /usr/bin/gcc ]]; then
 				sudo pacman -S --noconfirm base-devel
-			end
+			fi
 			cd linux-wandboard
 			makepkg -c -s --noconfirm
 			echo -e "y\ny\n" | makepkg -c -s -i
@@ -118,7 +118,7 @@ while (( "$#" )); do
 		if [[ "$action" == "install" ]]; then
 			if [[ ! -f /usr/bin/gcc ]]; then
 				sudo pacman -S --noconfirm base-devel
-			end
+			fi
 			cd linux-sun7i
 			makepkg -c -s --noconfirm
 			echo -e "y\ny\n" | makepkg -c -s -i
