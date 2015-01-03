@@ -27,16 +27,16 @@ while (( "$#" )); do
 		fi
 		if [[ "$action" == "install" ]]; then
 			if [[ -f ../binary-repo ]]; then
-				sudo pacman -S --noconfirm squeezelite
+				sudo pacman -S --noconfirm --noprogressbar squeezelite
 			else
 				if [[ ! -f /usr/bin/gcc ]]; then
-					sudo pacman -S --noconfirm base-devel
+					sudo pacman -S --noconfirm --noprogressbar base-devel
 				fi
 				cd libsoxr
-				makepkg -c -i -f -s --noconfirm
+				makepkg -c -i -f -s --noconfirm --noprogressbar
 				cd ..
 				cd squeezelite
-				makepkg -c -i -f -s --noconfirm
+				makepkg -c -i -f -s --noconfirm --noprogressbar
 				cd ..
 			fi
 		fi
@@ -48,16 +48,16 @@ while (( "$#" )); do
 		fi
 		if [[ "$action" == "install" ]]; then
 			if [[ -f ../binary-repo ]]; then
-				sudo pacman -S --noconfirm jivelite jivelite-autologin
+				sudo pacman -S --noconfirm --noprogressbar jivelite jivelite-autologin
 			else
 				if [[ ! -f /usr/bin/gcc ]]; then
-					sudo pacman -S --noconfirm base-devel
+					sudo pacman -S --noconfirm --noprogressbar base-devel
 				fi
 				cd jivelite
-				makepkg -c -i -f -s --noconfirm
+				makepkg -c -i -f -s --noconfirm --noprogressbar
 				cd ..
 				cd jivelite-autologin
-				makepkg -c -i -f -s --noconfirm
+				makepkg -c -i -f -s --noconfirm --noprogressbar
 				cd ..
 			fi
 		fi
@@ -69,10 +69,10 @@ while (( "$#" )); do
 		fi
 		if [[ "$action" == "install" ]]; then
 			if [[ ! -f /usr/bin/gcc ]]; then
-				sudo pacman -S --noconfirm base-devel
+				sudo pacman -S --noconfirm --noprogressbar base-devel
 			fi
 			cd logitechmediaserver-7.8
-			makepkg -c -i -s --noconfirm
+			makepkg -c -i -s --noconfirm --noprogressbar
 			cd ..
 		fi
 	fi
@@ -83,13 +83,13 @@ while (( "$#" )); do
 		fi
 		if [[ "$action" == "install" ]]; then
 			if [[ ! -f /usr/bin/gcc ]]; then
-				sudo pacman -S --noconfirm base-devel
+				sudo pacman -S --noconfirm --noprogressbar base-devel
 			fi
 			cd logitechmediaserver-7.9-cpan
-			makepkg -c -i -s --noconfirm
+			makepkg -c -i -s --noconfirm --noprogressbar
 			cd ..
 			cd logitechmediaserver-7.9-lms
-			makepkg -c -i -s --noconfirm
+			makepkg -c -i -s --noconfirm --noprogressbar
 			cd ..
 		fi
 	fi
@@ -97,15 +97,15 @@ while (( "$#" )); do
 	if [[ "$component" == "linux-wandboard-soa" ]]; then
 		if [[ "$action" == "remove" ]]; then
 			sudo pacman -R --noconfirm linux-wandboard-soa
-			sudo pacman -S --noconfirm linux-wandboard
+			sudo pacman -S --noconfirm --noprogressbar linux-wandboard
 		fi
 		if [[ "$action" == "install" ]]; then
 			if [[ ! -f /usr/bin/gcc ]]; then
-				sudo pacman -S --noconfirm base-devel
+				sudo pacman -S --noconfirm --noprogressbar base-devel
 			fi
 			cd linux-wandboard
 			makepkg -c -s --noconfirm
-			echo -e "y\ny\n" | makepkg -c -s -i
+			echo -e "y\ny\n" | makepkg -c -s -i --noprogressbar
 			cd ..
 		fi
 	fi
@@ -113,25 +113,25 @@ while (( "$#" )); do
 	if [[ "$component" == "linux-sun7i-soa" ]]; then
 		if [[ "$action" == "remove" ]]; then
 			sudo pacman -R --noconfirm linux-sun7i-soa
-			sudo pacman -S --noconfirm linux-sun7i
+			sudo pacman -S --noconfirm --noprogressbar linux-sun7i
 		fi
 		if [[ "$action" == "install" ]]; then
 			if [[ ! -f /usr/bin/gcc ]]; then
-				sudo pacman -S --noconfirm base-devel
+				sudo pacman -S --noconfirm --noprogressbar base-devel
 			fi
 			cd linux-sun7i
 			makepkg -c -s --noconfirm
-			echo -e "y\ny\n" | makepkg -c -s -i
+			echo -e "y\ny\n" | makepkg -c -s -i --noprogressbar
 			cd ..
 		fi
 	fi
 
 	if [[ "$component" == "linux-raspberrypi-latest" ]]; then
 		if [[ "$action" == "remove" ]]; then
-			echo -e "y\ny\n" | sudo pacman -S linux-raspberrypi
+			echo -e "y\ny\n" | sudo pacman -S --noprogressbar linux-raspberrypi
 		fi
 		if [[ "$action" == "install" ]]; then
-			echo -e "y\ny\n" | sudo pacman -S linux-raspberrypi-latest
+			echo -e "y\ny\n" | sudo pacman -S --noprogressbar linux-raspberrypi-latest
 		fi
 	fi
 

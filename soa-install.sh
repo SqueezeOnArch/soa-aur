@@ -28,32 +28,32 @@ pushd `dirname $0` > /dev/null
 
 if [[ -f ../binary-repo ]]; then
 
-	sudo pacman -S --noconfirm turbolua libsoxr squeezelite soa-web 
+	sudo pacman -S --noconfirm --noprogressbar turbolua libsoxr squeezelite soa-web 
 
 else
 
 	echo "1/4 turbolua" > /tmp/soa-install-progress
 
 	cd turbolua
-	makepkg -c -i -f -s --noconfirm
+	makepkg -c -i -f -s --noconfirm --noprogressbar
 	cd ..
 
 	echo "2/4 soa-web" > /tmp/soa-install-progress
 	
 	cd soa-web
-	makepkg -c -i -f -s --noconfirm
+	makepkg -c -i -f -s --noconfirm --noprogressbar
 	cd ..
 	
 	echo "3/4 libsoxr" > /tmp/soa-install-progress
 	
 	cd libsoxr
-	makepkg -c -i -f -s --noconfirm
+	makepkg -c -i -f -s --noconfirm --noprogressbar
 	cd ..
 	
 	echo "4/4 squeezelite" > /tmp/soa-install-progress
 
 	cd squeezelite
-	makepkg -c -i -f -s --noconfirm
+	makepkg -c -i -f -s --noconfirm --noprogressbar
 	cd ..
 	
 	rm /tmp/soa-install-progress

@@ -16,7 +16,7 @@ echo synchronising scripts
 git checkout HEAD -- $(git ls-files -m)
 git pull
 
-sudo pacman -Syu --noconfirm
+sudo pacman -Syu --noconfirm --noprogressbar
 
 if [[ ! -f ../binary-repo ]]; then
 
