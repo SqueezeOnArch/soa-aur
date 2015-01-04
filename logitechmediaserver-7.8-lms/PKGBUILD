@@ -24,6 +24,7 @@ install=install
 prepare() {
 	cd "${srcdir}/slimserver-${_slimserver_commit}"
 	rm -r CPAN/arch
+	rm -r CPAN/Audio/Scan.pm
 	rm -r CPAN/Class/XSAccessor.pm CPAN/Class/XSAccessor CPAN/DBD/SQLite.pm CPAN/DBI.pm CPAN/DBI CPAN/Digest/SHA1.pm
 	rm -r CPAN/EV.pm CPAN/Encode/Detect/Detector.pm CPAN/Font CPAN/HTML CPAN/IO/AIO.pm CPAN/IO/Interface.pm CPAN/IO/Interface
 	rm -r CPAN/Image/Scale.pm CPAN/JSON/XS.pm CPAN/JSON/XS/Boolean.pm

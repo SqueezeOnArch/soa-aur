@@ -65,13 +65,16 @@ while (( "$#" )); do
 	
 	if [[ "$component" == "server78" ]]; then
 		if [[ "$action" == "remove" ]]; then
-			sudo pacman -R --noconfirm logitechmediaserver
+			sudo pacman -R --noconfirm logitechmediaserver-7.8-lms logitechmediaserver-7.8-cpan
 		fi
 		if [[ "$action" == "install" ]]; then
 			if [[ ! -f /usr/bin/gcc ]]; then
 				sudo pacman -S --noconfirm --noprogressbar base-devel
 			fi
-			cd logitechmediaserver-7.8
+			cd logitechmediaserver-7.8-cpan
+			makepkg -c -i -s --noconfirm --noprogressbar
+			cd ..
+			cd logitechmediaserver-7.8-lms
 			makepkg -c -i -s --noconfirm --noprogressbar
 			cd ..
 		fi
@@ -79,7 +82,7 @@ while (( "$#" )); do
 	
 	if [[ "$component" == "server79" ]]; then
 		if [[ "$action" == "remove" ]]; then
-			sudo pacman -R --noconfirm logitechmediaserver-lms logitechmediaserver-cpan
+			sudo pacman -R --noconfirm logitechmediaserver-7.9-lms logitechmediaserver-7.9-cpan
 		fi
 		if [[ "$action" == "install" ]]; then
 			if [[ ! -f /usr/bin/gcc ]]; then
