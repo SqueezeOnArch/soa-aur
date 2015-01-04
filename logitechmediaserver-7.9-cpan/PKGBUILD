@@ -1,16 +1,18 @@
 # Maintainer: Adrian Smith <triode1@btinternet.com>
 
 pkgname=logitechmediaserver-cpan
-pkgver=7.9
-pkgrel=1
+pkgver=7.9r380.6f8c0bc
+pkgrel=2
 pkgdesc='Streaming audio server - cpan'
 license=('GPL' 'custom')
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
 depends=('perl>5.19' 'perl<5.21' 'gd')
 makedepends=('nasm' 'yasm' 'rsync' 'git')
 conflicts=('logitechmediaserver')
-source=('git+https://github.com/Logitech/slimserver-vendor.git#branch=public/7.9')
-sha1sums=('SKIP')
+source=('git+https://github.com/Logitech/slimserver-vendor.git#branch=public/7.9'
+	'LICENSEs.txt')
+sha1sums=('SKIP'
+          '7532d2df0d4899c62f22150eea73693fcab0199b')
 
 pkgver() {
 	cd "${srcdir}/slimserver-vendor"
@@ -23,23 +25,14 @@ prepare() {
 	    -e '/RUN_TESTS=1/c RUN_TESTS=0' \
 	    -i slimserver-vendor/CPAN/buildme.sh
 	sed \
-	    -e '/tar -zcvf $OUTPUT.tgz $OUTPUT/s/^/#/' \
-	    -e '/rm -rf $OUTPUT/s/^/#/' \
-	    -i slimserver-vendor/flac/buildme-linux.sh
-	sed \
-	    -e '/tar -zcvf $OUTPUT.tgz $OUTPUT/s/^/#/' \
-	    -e '/rm -rf $OUTPUT/s/^/#/' \
-	    -i slimserver-vendor/faad2/buildme-linux.sh
+	    -e '/    build Media::Scan/c #    build Media::Scan' \
+	    -i slimserver-vendor/CPAN/buildme.sh
 }
 
 build() {
 	cd "${srcdir}/slimserver-vendor/CPAN"
-	export CFLAGS=${CFLAGS//-O2/-Os}
+	#export CFLAGS=${CFLAGS//-O2/-Os}
 	sh buildme.sh
-	cd "${srcdir}/slimserver-vendor/flac"
-	sh buildme-linux.sh
-	cd "${srcdir}/slimserver-vendor/faad2"
-	sh buildme-linux.sh
 }
 
 package() {
@@ -47,6 +40,5 @@ package() {
 	install -d "${pkgdir}/opt/logitechmediaserver/CPAN"
 	install -d "${pkgdir}/opt/logitechmediaserver/Bin"
 	cp -a slimserver-vendor/CPAN/build/5.20/lib/perl5/*linux*/* "${pkgdir}/opt/logitechmediaserver/CPAN"
-	cp slimserver-vendor/flac/flac-build*/bin/flac "${pkgdir}/opt/logitechmediaserver/Bin"
-	cp slimserver-vendor/faad2/faad2-build*/bin/faad "${pkgdir}/opt/logitechmediaserver/Bin"
+	install -Dm644 LICENSEs.txt "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSEs.txt
 }

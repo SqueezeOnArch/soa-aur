@@ -1,7 +1,7 @@
 # Maintained: Adrian Smith <triode1@btinternet.com>
 
 pkgname=logitechmediaserver-lms
-pkgver=7.9
+pkgver=7.9r19579.1a3767f
 pkgrel=1
 pkgdesc='Streaming audio server'
 url='http://downloads.slimdevices.com/'
@@ -10,11 +10,12 @@ arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
 [[ $CARCH = x86_64 ]] && optdepends=(lib32-{glibc,gcc-libs}': transcoding')
 depends=('perl>5.19' 'perl<5.21' 'logitechmediaserver-cpan' 'lame')
 conflicts=('logitechmediaserver')
+options=(!strip)
 source=('git+https://github.com/Logitech/slimserver.git#branch=public/7.9'
         'service'
 	'install')
 sha1sums=('SKIP'
-          '734f84233fc7ab350b169f88aa5bb0cf3decad42'
+          '2b39cea0c53107502a4e74d23779091e7dc6fb3c'
           '9ff1f7abcf19c4fad8522860f0bc1a67c24d8fb4')
 
 install=install
@@ -35,7 +36,7 @@ prepare() {
 	case $CARCH in
 		x86_64) rm -r Bin/arm-linux ;;
 		i686) rm -r Bin/arm-linux Bin/x86_64-linux ;;
-		arm*) rm -r Bin/i386-linux Bin/x86_64-linux Bin/arm-linux/flac Bin/arm-linux/faad ;;
+		arm*) rm -r Bin/i386-linux Bin/x86_64-linux ;;
 	esac
 }
 
