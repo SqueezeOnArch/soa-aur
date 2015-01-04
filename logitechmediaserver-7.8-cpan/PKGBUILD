@@ -1,36 +1,32 @@
 # Maintainer: Adrian Smith <triode1@btinternet.com>
 
-pkgname=logitechmediaserver-7.9-cpan
+pkgname=logitechmediaserver-7.8-cpan
 pkgver=1
 pkgrel=1
+_vendor_commit=d6063ff9c7095e9bdc650981f9dbe159229a7cb6
 pkgdesc='Streaming audio server - cpan'
 license=('GPL' 'custom')
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
 depends=('perl>5.19' 'perl<5.21' 'gd')
 makedepends=('nasm' 'yasm' 'rsync' 'git')
-conflicts=('logitechmediaserver' 'logitechmediaserver-cpan' 'logitechmediaserver-7.8-cpan')
-source=('git+https://github.com/Logitech/slimserver-vendor.git#branch=public/7.9'
-		'LICENSEs.txt')
-sha1sums=('SKIP'
+conflicts=('logitechmediaserver' 'logitechmediaserver-cpan' 'logitechmediaserver-7.9-cpan')
+source=("https://github.com/Logitech/slimserver-vendor/archive/${_vendor_commit}.tar.gz"
+	'LICENSEs.txt')
+sha1sums=('d1722c2df4638707f14d47e99dc2b1f3ede3b9f9'
           '7532d2df0d4899c62f22150eea73693fcab0199b')
-
-pkgver() {
-	cd "${srcdir}/slimserver-vendor"
-	printf "7.9r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-}
 
 prepare() {
 	cd ${srcdir}
 	sed \
 	    -e '/RUN_TESTS=1/c RUN_TESTS=0' \
-	    -i slimserver-vendor/CPAN/buildme.sh
+	    -i slimserver-vendor-${_vendor_commit}/CPAN/buildme.sh
 	sed \
 	    -e '/    build Media::Scan/c #    build Media::Scan' \
-	    -i slimserver-vendor/CPAN/buildme.sh
+	    -i slimserver-vendor-${_vendor_commit}/CPAN/buildme.sh
 }
 
 build() {
-	cd "${srcdir}/slimserver-vendor/CPAN"
+	cd "${srcdir}/slimserver-vendor-${_vendor_commit}/CPAN"
 	#export CFLAGS=${CFLAGS//-O2/-Os}
 	sh buildme.sh
 }
@@ -38,6 +34,6 @@ build() {
 package() {
 	cd ${srcdir}
 	install -d "${pkgdir}/opt/logitechmediaserver/CPAN"
-	cp -a slimserver-vendor/CPAN/build/5.20/lib/perl5/*linux*/* "${pkgdir}/opt/logitechmediaserver/CPAN"
+	cp -a slimserver-vendor-${_vendor_commit}/CPAN/build/5.20/lib/perl5/*linux*/* "${pkgdir}/opt/logitechmediaserver/CPAN"
 	install -Dm644 LICENSEs.txt "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSEs.txt
 }

@@ -1,32 +1,28 @@
 # Maintained: Adrian Smith <triode1@btinternet.com>
 
-pkgname=logitechmediaserver-7.9-lms
+pkgname=logitechmediaserver-7.8-lms
 pkgver=1
 pkgrel=1
+_slimserver_commit=c577b1c6659640a70fb0be07d1376b8e8999c740
 pkgdesc='Streaming audio server'
 url='http://downloads.slimdevices.com/'
 license=('GPL' 'custom')
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
 [[ $CARCH = x86_64 ]] && optdepends=(lib32-{glibc,gcc-libs}': transcoding')
-depends=('perl>5.19' 'perl<5.21' 'logitechmediaserver-7.9-cpan' 'lame')
-conflicts=('logitechmediaserver' 'logitechmediaserver-lms' 'logitechmediaserver-7.8-lms')
+depends=('perl>5.19' 'perl<5.21' 'logitechmediaserver-7.8-cpan' 'lame')
+conflicts=('logitechmediaserver' 'logitechmediaserver-lms' 'logitechmediaserver-7.9-lms')
 options=(!strip)
-source=('git+https://github.com/Logitech/slimserver.git#branch=public/7.9'
+source=("https://github.com/Logitech/slimserver/archive/${_slimserver_commit}.tar.gz"
         'service'
-		'install')
-sha1sums=('SKIP'
+	'install')
+sha1sums=('9a8881ae25dee6d07675f7e2efd8e7043344a306'
           '2b39cea0c53107502a4e74d23779091e7dc6fb3c'
           '9ff1f7abcf19c4fad8522860f0bc1a67c24d8fb4')
 
 install=install
 
-pkgver() {
-         cd "${srcdir}/slimserver"
-         printf "7.9r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-}
-
 prepare() {
-	cd "${srcdir}/slimserver"
+	cd "${srcdir}/slimserver-${_slimserver_commit}"
 	rm -r CPAN/arch
 	rm -r CPAN/Class/XSAccessor.pm CPAN/Class/XSAccessor CPAN/DBD/SQLite.pm CPAN/DBI.pm CPAN/DBI CPAN/Digest/SHA1.pm
 	rm -r CPAN/EV.pm CPAN/Encode/Detect/Detector.pm CPAN/Font CPAN/HTML CPAN/IO/AIO.pm CPAN/IO/Interface.pm CPAN/IO/Interface
@@ -42,7 +38,7 @@ prepare() {
 }
 
 package() {
-	cd "${srcdir}/slimserver"
+	cd "${srcdir}/slimserver-${_slimserver_commit}"
 	install -d "${pkgdir}"/{opt,usr/share/licenses}"/logitechmediaserver"
 	cp -a * "${pkgdir}/opt/logitechmediaserver"
 	ln -s "/opt/logitechmediaserver/License.txt" "${pkgdir}/usr/share/licenses/logitechmediaserver/LICENSE"
