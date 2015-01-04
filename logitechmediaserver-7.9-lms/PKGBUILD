@@ -1,19 +1,19 @@
 # Maintained: Adrian Smith <triode1@btinternet.com>
 
-pkgname=logitechmediaserver-lms
-pkgver=7.9r19579.1a3767f
-pkgrel=1
+pkgname=logitechmediaserver-7.9-lms
+pkgver=7.9
+pkgrel=2
 pkgdesc='Streaming audio server'
 url='http://downloads.slimdevices.com/'
 license=('GPL' 'custom')
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
 [[ $CARCH = x86_64 ]] && optdepends=(lib32-{glibc,gcc-libs}': transcoding')
-depends=('perl>5.19' 'perl<5.21' 'logitechmediaserver-cpan' 'lame')
-conflicts=('logitechmediaserver')
+depends=('perl>5.19' 'perl<5.21' 'logitechmediaserver-7.9-cpan' 'lame')
+conflicts=('logitechmediaserver' 'logitechmediaserver-lms' 'logitechmediaserver-7.8-lms')
 options=(!strip)
 source=('git+https://github.com/Logitech/slimserver.git#branch=public/7.9'
         'service'
-	'install')
+		'install')
 sha1sums=('SKIP'
           '2b39cea0c53107502a4e74d23779091e7dc6fb3c'
           '9ff1f7abcf19c4fad8522860f0bc1a67c24d8fb4')
@@ -24,6 +24,7 @@ pkgver() {
          cd "${srcdir}/slimserver"
          printf "7.9r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
+
 prepare() {
 	cd "${srcdir}/slimserver"
 	rm -r CPAN/arch
