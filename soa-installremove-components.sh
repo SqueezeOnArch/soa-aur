@@ -68,15 +68,25 @@ while (( "$#" )); do
 			sudo pacman -R --noconfirm logitechmediaserver-7.8-lms logitechmediaserver-7.8-cpan
 		fi
 		if [[ "$action" == "install" ]]; then
-			if [[ ! -f /usr/bin/gcc ]]; then
-				sudo pacman -S --noconfirm --noprogressbar base-devel
+			if [[ -f ../binary-repo ]]; then
+				sudo pacman -S --noconfirm --noprogressbar logitechmediaserver-7.8-cpan
+				if [[ ! -f /usr/bin/fakeroot ]]; then
+					sudo pacman -S --noconfirm --noprogressbar fakeroot
+				fi
+				cd logitechmediaserver-7.8-lms
+				makepkg -c -i -s --noconfirm --noprogressbar
+				cd ..
+			else
+				if [[ ! -f /usr/bin/gcc ]]; then
+					sudo pacman -S --noconfirm --noprogressbar base-devel
+				fi
+				cd logitechmediaserver-7.8-cpan
+				makepkg -c -i -s --noconfirm --noprogressbar
+				cd ..
+				cd logitechmediaserver-7.8-lms
+				makepkg -c -i -s --noconfirm --noprogressbar
+				cd ..
 			fi
-			cd logitechmediaserver-7.8-cpan
-			makepkg -c -i -s --noconfirm --noprogressbar
-			cd ..
-			cd logitechmediaserver-7.8-lms
-			makepkg -c -i -s --noconfirm --noprogressbar
-			cd ..
 		fi
 	fi
 	
@@ -85,15 +95,25 @@ while (( "$#" )); do
 			sudo pacman -R --noconfirm logitechmediaserver-7.9-lms logitechmediaserver-7.9-cpan
 		fi
 		if [[ "$action" == "install" ]]; then
-			if [[ ! -f /usr/bin/gcc ]]; then
-				sudo pacman -S --noconfirm --noprogressbar base-devel
+			if [[ -f ../binary-repo ]]; then
+				sudo pacman -S --noconfirm --noprogressbar logitechmediaserver-7.9-cpan
+				if [[ ! -f /usr/bin/fakeroot ]]; then
+					sudo pacman -S --noconfirm --noprogressbar fakeroot
+				fi
+				cd logitechmediaserver-7.9-lms
+				makepkg -c -i -s --noconfirm --noprogressbar
+				cd ..
+			else
+				if [[ ! -f /usr/bin/gcc ]]; then
+					sudo pacman -S --noconfirm --noprogressbar base-devel
+				fi
+				cd logitechmediaserver-7.9-cpan
+				makepkg -c -i -s --noconfirm --noprogressbar
+				cd ..
+				cd logitechmediaserver-7.9-lms
+				makepkg -c -i -s --noconfirm --noprogressbar
+				cd ..
 			fi
-			cd logitechmediaserver-7.9-cpan
-			makepkg -c -i -s --noconfirm --noprogressbar
-			cd ..
-			cd logitechmediaserver-7.9-lms
-			makepkg -c -i -s --noconfirm --noprogressbar
-			cd ..
 		fi
 	fi
 	
