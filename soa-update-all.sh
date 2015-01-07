@@ -50,21 +50,27 @@ if [[ ! -f ../binary-repo ]]; then
 		cd ..
 	fi
 	
-	if [[ `pacman -Qq logitechmediaserver 2>/dev/null` == "logitechmediaserver" ]]; then
-		cd logitechmediaserver-7.8
+	if [[ `pacman -Qq logitechmediaserver-7.8-cpan 2>/dev/null` == "logitechmediaserver" ]]; then
+		cd logitechmediaserver-7.8-cpan
+		makepkg -c -i -s --noconfirm --noprogressbar "$opt"
+		cd ..
+	fi
+
+	if [[ `pacman -Qq logitechmediaserver-7.9-cpan 2>/dev/null` == "logitechmediaserver" ]]; then
+		cd logitechmediaserver-7.9-cpan
 		makepkg -c -i -s --noconfirm --noprogressbar "$opt"
 		cd ..
 	fi
 
 fi
 
-if [[ `pacman -Qq logitechmediaserver-cpan 2>/dev/null` == "logitechmediaserver-cpan" ]]; then
-    cd logitechmediaserver-7.9-cpan
+if [[ `pacman -Qq logitechmediaserver-7.8-lms 2>/dev/null` == "logitechmediaserver-cpan" ]]; then
+    cd logitechmediaserver-7.8-lms
     makepkg -c -i -s --noconfirm --noprogressbar "$opt"
     cd ..
 fi
 
-if [[ `pacman -Qq logitechmediaserver-lms 2>/dev/null` == "logitechmediaserver-lms" ]]; then
+if [[ `pacman -Qq logitechmediaserver-7.9-lms 2>/dev/null` == "logitechmediaserver-lms" ]]; then
     cd logitechmediaserver-7.9-lms
     makepkg -c -i -s --noconfirm --noprogressbar "$opt"
     cd ..
