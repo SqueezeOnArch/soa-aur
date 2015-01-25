@@ -158,6 +158,15 @@ while (( "$#" )); do
 		fi
 	fi
 
+	if [[ "$component" == "ffmpeg" ]]; then
+		if [[ "$action" == "remove" ]]; then
+			sudo pacman -R --noconfirm ffmpeg
+		fi
+		if [[ "$action" == "install" ]]; then
+			sudo pacman -S --noconfirm ffmpeg
+		fi
+	fi
+
 done
 
 popd > /dev/null
