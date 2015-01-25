@@ -1,12 +1,13 @@
 # Contributor: Adrian Smith <triode1@btinternet.com>
 
 pkgname=squeezelite
-pkgver=r143.159325a
+pkgver=r146.3946139
 pkgrel=1
 pkgdesc='Lightweight headless squeezebox emulator'
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
 url='http://code.google.com/p/squeezelite/'
 license=(GPL3)
+makedepends=('ffmpeg')
 depends=('alsa-lib' 'faad2' 'flac' 'libmad' 'libvorbis' 'mpg123' 'libsoxr')
 provides=('squeezelite')
 conflicts=('squeezelite')
@@ -27,7 +28,7 @@ build() {
 	cd $pkgname
 
 	export LDFLAGS="${LDFLAGS} -lasound -lpthread -lm -lrt"
-	export CFLAGS="${CFLAGS} -DDSD -DRESAMPLE -DVISEXPORT -DLINKALL"
+	export CFLAGS="${CFLAGS} -DDSD -DRESAMPLE -DVISEXPORT -DFFMPEG"
 	make
 }
 
@@ -43,7 +44,7 @@ package() {
 
 
 sha256sums=('SKIP'
-            '4c9e682c3e765f961a6d7bf1e062ebd77333db080655be75c55805d6646979d6'
+            '15695d9dbb94e41f7aae7450dcfa9fbba83f25f4d8f2427e872c20c302e486cc'
             'f0753a1cbd0194119226587ff9c12257438674d9b8e0179d22f0d5461ad3a70a'
             '0f19c6b028ad6005c21039a3cb996824ad3be54e69cc010db4c9a409ce4cdb96')
 
