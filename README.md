@@ -29,7 +29,7 @@ pacman -Syu --noconfirm
 
 pacman -S --noconfirm git base-devel
 
-3) Create a user with sudo capability (** needed as of makepkg 4.2.0 **)
+3) Create a user with sudo capability (** needed as of makepkg 4.2.0 **) - Note 1
 
 4) As that user clone the soa-aur files and start installation
 
@@ -42,3 +42,6 @@ cd soa-aur
 (this will take several minutes to download and build the applications for your device)
 
 5) Connect to the device using a web browser to see the configuration interface and install optional components such as jivelite and squeeze server
+
+
+Note 1 - user should be "aur" with soa-aur cloned in directory /aur to enable SoA update mechanisms
