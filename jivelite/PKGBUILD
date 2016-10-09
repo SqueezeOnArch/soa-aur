@@ -5,12 +5,12 @@ pkgver=r76.de07c79
 pkgrel=1
 pkgdesc='Squeezebox Control Application'
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
-url='http://code.google.com/p/jivelite/'
+url='http://github.com/ralph-irving/jivelite'
 license=('BSD')
 depends=('git' 'sdl' 'sdl_gfx' 'sdl_image' 'sdl_ttf')
 provides=('jivelite')
 conflicts=('jivelite')
-source=('git+https://code.google.com/p/jivelite/'
+source=('git+https://github.com/ralph-irving/jivelite/'
 	'fb.modes')
 
 pkgver() {
