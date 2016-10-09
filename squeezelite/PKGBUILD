@@ -5,13 +5,13 @@ pkgver=r146.3946139
 pkgrel=1
 pkgdesc='Lightweight headless squeezebox emulator'
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
-url='http://code.google.com/p/squeezelite/'
+url='http://github.com/ralph-irving/squeezelite/'
 license=(GPL3)
 makedepends=('ffmpeg')
 depends=('alsa-lib' 'faad2' 'flac' 'libmad' 'libvorbis' 'mpg123' 'libsoxr')
 provides=('squeezelite')
 conflicts=('squeezelite')
-source=('git+https://code.google.com/p/squeezelite/'
+source=('git+https://github.com/ralph-irving/squeezelite/'
 	'service'
 	'conffile'
 	'install'
